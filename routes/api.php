@@ -1,0 +1,14 @@
+<?php
+
+use App\Http\Controllers\Api\AuthController;
+use Illuminate\Support\Facades\Route;
+
+Route::prefix('v1')->group(function () {
+    Route::prefix('auth')->group(function () {
+        Route::post('/register', [AuthController::class, 'register'])->name('v1.auth.register');
+        Route::post('/login', [AuthController::class, 'login'])->name('v1.auth.login');
+    });
+    Route::middleware('auth:sanctum')->prefix('auth')->group(function () {
+        Route::post('/logout', [AuthController::class, 'logout'])->name('v1.auth.logout');
+    });
+});
