@@ -25,6 +25,10 @@ class Department extends Model
     {
         return $this->hasMany(Review::class);
     }
+    public function images()
+    {
+        return $this->hasMany(DepartmentImage::class);
+    }
     public function getAverageRatingAttribute()
     {
         return round($this->reviews()->avg('rating'), 2);

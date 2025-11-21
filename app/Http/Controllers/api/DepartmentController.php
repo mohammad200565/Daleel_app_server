@@ -12,23 +12,28 @@ class DepartmentController extends BaseApiController
 {
     public function index()
     {
-        $departments = Department::paginate(20);
+        $departments = Department::with('images')->paginate(20);
         return $this->successResponse('Departments retrieved successfully', DepartmentResource::collection($departments));
     }
     public function store(StoreDepartmentRequest $request)
     {
         $data = $request->validated();
         $department = Department::create($data);
+        // i still didnt do the logic of image uploading
+        $department->load('images');
         return $this->successResponse('Department created successfully', new DepartmentResource($department), 201);
     }
     public function show(Department $department)
     {
+        $department->load('images');
         return $this->successResponse('Department retrieved successfully', new DepartmentResource($department));
     }
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
         $data = $request->validated();
         $department->update($data);
+        // i still didnt do the logic of image uploading
+        $department->load('images');
         return $this->successResponse('Department updated successfully', new DepartmentResource($department));
     }
     public function destroy(Department $department)

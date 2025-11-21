@@ -21,6 +21,7 @@ class DepartmentResource extends JsonResource
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,
             'average_rating' => $this->average_rating,
+            'images' => $this->images->map(fn($img) => $img->path),
         ];
         return $data;
     }
