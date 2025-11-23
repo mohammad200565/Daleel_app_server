@@ -13,13 +13,15 @@ class StoreDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => 'required|exists:users,id',
             'description' => 'required|string',
             'rentFee' => 'required|numeric',
             'isAvailable' => 'required|boolean',
             'status' => 'required|string',
             'size' => 'required|integer',
-            'location' => 'required|string',
+            'location.province' => 'required|string',
+            'location.city' => 'required|string',
+            'location.district' => 'nullable|string',
+            'location.street' => 'nullable|string',
         ];
     }
 }

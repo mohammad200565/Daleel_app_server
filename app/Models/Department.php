@@ -17,6 +17,9 @@ class Department extends Model
         'isAvailable',
         'status',
     ];
+    protected $casts = [
+        'location' => 'array',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -33,8 +36,21 @@ class Department extends Model
     {
         return round($this->reviews()->avg('rating'), 2);
     }
+    public function getReviewCountAttribute()
+    {
+        return $this->reviews()->count();
+    }
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
+    }
+    public function setLocationAttribute($value)
+    {
+        $this->attributes['location'] = json_encode([
+            'province' => $value['province'] ?? null,
+            'city' => $value['city'] ?? null,
+            'district' => $value['district'] ?? null,
+            'street' => $value['street'] ?? null,
+        ]);
     }
 }

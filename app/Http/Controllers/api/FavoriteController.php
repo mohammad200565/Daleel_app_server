@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\Request;
 
 class FavoriteController extends BaseApiController
 {
+
+    public function index()
+    {
+        $user = Request()->user();
+        $favorites = $user->favorites()->with('department')->paginate(20);
+        return $this->successResponse('Favorite list loaded', FavoriteResource::collection($favorites));
+    }
     public function toggle(Request $request, Department $department)
     {
         $user = request()->user();

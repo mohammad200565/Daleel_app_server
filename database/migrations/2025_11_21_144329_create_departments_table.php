@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->string('description');
             $table->string('size');
-            $table->string('location');
+            $table->json('location');
             $table->decimal('rentFee', 10, 2);
             $table->boolean('isAvailable')->default(true);
             $table->enum('status', ['furnished', 'unfurnished', 'partially furnished']);

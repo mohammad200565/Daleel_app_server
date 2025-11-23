@@ -22,4 +22,8 @@ class Review extends Model
     {
         return $this->belongsTo(Department::class);
     }
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
 }

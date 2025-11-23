@@ -14,14 +14,20 @@ class DepartmentResource extends JsonResource
             'user_id' => $this->resource->user_id,
             'description' => $this->resource->description,
             'size' => $this->resource->size,
-            'location' => $this->resource->location,
             'rentFee' => $this->resource->rentFee,
             'isAvailable' => $this->resource->isAvailable,
             'status' => $this->resource->status,
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,
-            'average_rating' => $this->average_rating,
-            'images' => $this->images->map(fn($img) => $img->path),
+            'average_rating' => $this->resource->average_rating,
+            'review_count' => $this->resource->review_count,
+            'images' => $this->resource->images->map(fn($img) => $img->path),
+            'location' => [
+                'province' => $this->resource->location['province'] ?? null,
+                'city' => $this->resource->location['city'] ?? null,
+                'district' => $this->resource->location['district'] ?? null,
+                'street' => $this->resource->location['street'] ?? null,
+            ],
         ];
         return $data;
     }

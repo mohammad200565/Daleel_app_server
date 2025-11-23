@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\StoreDepartmentRequest;
+use App\Filters\ReviewFilter;
 use App\Http\Requests\StoreReviewRequest;
-use App\Http\Requests\UpdateDepartmentRequest;
 use App\Http\Requests\UpdateReviewRequest;
 use App\Models\Department;
 use App\Models\Review;
+use Illuminate\Http\Request;
 
 class ReviewController extends BaseApiController
 {
-    public function index(Department $department)
+    public function index(Request $request, Department $department)
     {
-        $reviews = $department->reviews()->with('user')->paginate(20);
+        $filter = new ReviewFilter($request);
+        $reviews = $department->reviews()->with('user')->filter($filter)->paginate(20);
         return $this->successResponse('Reviews retrieved successfully', $reviews);
     }
     public function store(StoreReviewRequest $request, Department $department)

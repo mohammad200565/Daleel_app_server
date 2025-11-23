@@ -19,13 +19,9 @@ class RentController extends BaseApiController
     }
     public function store(StoreRentRequest $request)
     {
-        $rent = Rent::create([
-            'user_id'       => $request->user()->id,
-            'department_id' => $request->department_id,
-            'startRent'     => $request->startRent,
-            'endRent'       => $request->endRent,
-            'rentFee'       => $request->rentFee,
-        ]);
+        $data = $request->validated();
+        $data['user_id'] = request()->user()->id;
+        $rent = Rent::create($data);
         return $this->successResponse("Rent created successfully", [
             'rent' => new RentResource($rent),
         ]);

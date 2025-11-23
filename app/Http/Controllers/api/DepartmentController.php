@@ -23,6 +23,7 @@ class DepartmentController extends BaseApiController
     public function store(StoreDepartmentRequest $request)
     {
         $data = $request->validated();
+        $data['user_id'] = request()->user()->id;
         $department = Department::create($data);
         // i still didnt do the logic of image uploading
         $department->load('images');

@@ -10,6 +10,7 @@ class DepartmentFilter
     protected $builder;
 
     protected $filters = [
+        'province',
         'city',
         'min_price',
         'max_price',
@@ -24,6 +25,7 @@ class DepartmentFilter
     public function apply($builder)
     {
         $this->builder = $builder;
+
         foreach ($this->filters as $filter) {
             $value = $this->request->query($filter);
             if (!is_null($value)) {
@@ -33,29 +35,67 @@ class DepartmentFilter
                 }
             }
         }
+
         return $this->builder;
+    }
+
+    private function filterProvince($value)
+    {
+        return $this->builder->where('location->province', $value);
     }
 
     private function filterCity($value)
     {
-        return $this->builder->where('location', $value);
+        return $this->builder->where('location->city', $value);
     }
+
     private function filterMin_price($value)
     {
         return $this->builder->where('rentFee', '>=', $value);
     }
+
     private function filterMax_price($value)
     {
         return $this->builder->where('rentFee', '<=', $value);
     }
+
     private function filterSort($value)
     {
-        if ($value === 'price_asc') {
-            return $this->builder->orderBy('rentFee', 'asc');
-        }
+        switch ($value) {
+            case 'price_asc':
+                return $this->builder->orderBy('rentFee', 'asc');
 
-        if ($value === 'price_desc') {
-            return $this->builder->orderBy('rentFee', 'desc');
+            case 'price_desc':
+                return $this->builder->orderBy('rentFee', 'desc');
+
+            case 'date_asc':
+                return $this->builder->orderBy('created_at', 'asc');
+
+            case 'date_desc':
+                return $this->builder->orderBy('created_at', 'desc');
+
+            case 'rating_desc':
+                return $this->builder
+                    ->withAvg('reviews', 'rating')
+                    ->orderBy('reviews_avg_rating', 'desc');
+
+            case 'rating_asc':
+                return $this->builder
+                    ->withAvg('reviews', 'rating')
+                    ->orderBy('reviews_avg_rating', 'asc');
+
+            case 'reviews_desc':
+                return $this->builder
+                    ->withCount('reviews')
+                    ->orderBy('reviews_count', 'desc');
+
+            case 'reviews_asc':
+                return $this->builder
+                    ->withCount('reviews')
+                    ->orderBy('reviews_count', 'asc');
+
+            default:
+                return $this->builder;
         }
     }
 }
