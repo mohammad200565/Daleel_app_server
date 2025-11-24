@@ -22,7 +22,12 @@ class Rent extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function department(){
+    public function department()
+    {
         return $this->belongsTo(Department::class);
+    }
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
     }
 }

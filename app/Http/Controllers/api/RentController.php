@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Filters\RentFilter;
 use App\Http\Requests\StoreRentRequest;
 use App\Http\Requests\UpdateRentRequest;
 use App\Http\Resources\RentResource;
@@ -10,13 +11,15 @@ use Illuminate\Http\Request;
 
 class RentController extends BaseApiController
 {
+
     private $relations = ['user', 'department'];
     public function index(Request $request)
     {
+        $filters = new RentFilter($request);
         $user = request()->user();
         $query = $user->rents();
         $rents = $this->loadRelations($request, $query, $this->relations)
-            ->latest()->paginate(15);
+            ->filter($filters)->paginate(15);
         return $this->successResponse("Rents fetched successfully", [
             'rents' => RentResource::collection($rents),
         ]);
