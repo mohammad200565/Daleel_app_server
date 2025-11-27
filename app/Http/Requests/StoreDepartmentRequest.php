@@ -13,7 +13,7 @@ class StoreDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required|string',
+            'description' => 'string',
             'rentFee' => 'required|numeric',
             'isAvailable' => 'required|boolean',
             'status' => 'required|string',
