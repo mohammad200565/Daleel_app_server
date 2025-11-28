@@ -1,6 +1,6 @@
 @props(['user'])
 
-<a href="/users/{{$user}}" class="user-card-link">
+<a href="/users/{{$user->id}}" class="user-card-link">
     <div class="user-card">
         @if($user->profile_image)
             <img src="{{ asset('storage/' . $user->profile_image) }}" alt="{{ $user->first_name }} {{ $user->last_name }}" class="user-image">
