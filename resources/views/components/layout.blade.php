@@ -176,7 +176,7 @@
         <a href="/" class="logo">Daleel Admins</a>
         
         <div class="nav-buttons">
-            <a href="/" class="nav-link {{ request()->is('users') ? 'active' : '' }}">Home</a>
+            <a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
             <a href="/users" class="nav-link {{ request()->is('users') ? 'active' : '' }}">Users</a>
             <a href="/departments" class="nav-link {{ request()->is('departments') ? 'active' : '' }}">Departments</a>
             <a href="/contracts" class="nav-link {{ request()->is('contracts') ? 'active' : '' }}">Contracts</a>
@@ -188,7 +188,10 @@
         @endguest
 
         @auth
-            <a href="/logout" class="login-btn">Log Out</a>
+            <form method="POST" action="/logout">
+                @csrf
+                <button class="login-btn" style="font-size: 16px;">Log Out</button>
+            </form>
         @endauth
 
     </header>

@@ -28,3 +28,4 @@ Route::get('/login', function() {
 });
 
 Route::post('login', [AdminController::class, 'login']);
+Route::post('logout', [AdminController::class, 'logout']);
