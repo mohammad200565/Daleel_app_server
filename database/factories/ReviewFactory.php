@@ -17,7 +17,6 @@ class ReviewFactory extends Factory
             'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
             'department_id' => Department::inRandomOrder()->first()->id ?? Department::factory(),
             'rating' => fake()->numberBetween(1, 5),
-            'comment' => fake()->sentence(),
         ];
     }
 }

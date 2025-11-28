@@ -10,16 +10,16 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->text('content');
             $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Department::class)->constrained()->onDelete('cascade');
-            $table->integer('rating');
             $table->timestamps();
         });
     }
     public function down(): void
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('comments');
     }
 };

@@ -69,7 +69,7 @@
         
         <div class="users-grid">
             @forelse($users as $index => $user)
-                @if($index > 0) {{-- Skip the first user (index 0) --}}
+                @if($index > 0) 
                     <x-user-card :user="$user" />
                 @endif
             @empty

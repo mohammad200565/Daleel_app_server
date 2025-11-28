@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Department;
 use App\Models\Review;
 use App\Models\User;
 

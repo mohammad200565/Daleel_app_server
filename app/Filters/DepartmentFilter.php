@@ -12,9 +12,16 @@ class DepartmentFilter
     protected $filters = [
         'governorate',
         'city',
+        'district',
+        'street',
         'min_price',
         'max_price',
-        'sort'
+        'sort',
+        'bedrooms',
+        'bathrooms',
+        'floor',
+        'min_area',
+        'max_area'
     ];
 
     public function __construct(Request $request)
@@ -39,14 +46,45 @@ class DepartmentFilter
         return $this->builder;
     }
 
+    private function filterBedrooms($value)
+    {
+        return $this->builder->where('bedrooms', $value);
+    }
+
+    private function filterBathrooms($value)
+    {
+        return $this->builder->where('bathrooms', $value);
+    }
+
+    private function filterFloor($value)
+    {
+        return $this->builder->where('floor', $value);
+    }
+
+    private function filterMin_area($value)
+    {
+        return $this->builder->where('area', '>=', $value);
+    }
+
+    private function filterMax_area($value)
+    {
+        return $this->builder->where('area', '<=', $value);
+    }
     private function filterGovernorate($value)
     {
         return $this->builder->where('location->governorate', $value);
     }
-
     private function filterCity($value)
     {
         return $this->builder->where('location->city', $value);
+    }
+    private function filterDistrict($value)
+    {
+        return $this->builder->where('location->district', $value);
+    }
+    private function filterStreet($value)
+    {
+        return $this->builder->where('location->street', $value);
     }
 
     private function filterMin_price($value)

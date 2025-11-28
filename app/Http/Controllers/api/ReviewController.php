@@ -5,19 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Filters\ReviewFilter;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
+use App\Http\Resources\ReviewResource;
 use App\Models\Department;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
 class ReviewController extends BaseApiController
 {
-    private $relations = ['user'];
+    private $relations = ['user', 'department'];
     public function index(Request $request, Department $department)
     {
         $filter = new ReviewFilter($request);
         $query = $department->reviews();
         $reviews = $this->loadRelations($request, $query, $this->relations)->filter($filter)->paginate(20);
-        return $this->successResponse('Reviews retrieved successfully', $reviews);
+        return $this->successResponse('Reviews retrieved successfully', ReviewResource::collection($reviews));
     }
     public function store(StoreReviewRequest $request, Department $department)
     {
@@ -27,12 +28,12 @@ class ReviewController extends BaseApiController
         $review->department()->associate($department);
         $review->load('user');
         $review->save();
-        return $this->successResponse('Review created successfully', $review, 201);
+        return $this->successResponse('Review created successfully', new ReviewResource($review), 201);
     }
     public function show(Request $request, Department $department, Review $review)
     {
         $this->loadRelations($request, $review, $this->relations);
-        return $this->successResponse('Review retrieved successfully', $review);
+        return $this->successResponse('Review retrieved successfully', new ReviewResource($review));
     }
     public function update(UpdateReviewRequest $request, Department $department, Review $review)
     {
@@ -40,7 +41,7 @@ class ReviewController extends BaseApiController
         $data = $request->validated();
         $review->update($data);
         $review->load('user');
-        return $this->successResponse('Review updated successfully', $review);
+        return $this->successResponse('Review updated successfully', new ReviewResource($review));
     }
     public function destroy(Department $department, Review $review)
     {
