@@ -10,18 +10,24 @@ class StoreDepartmentRequest extends FormRequest
     {
         return true;
     }
+
     public function rules(): array
     {
         return [
-            'description' => 'string',
+            'description' => 'required|string',
+            'area' => 'required|numeric',
             'rentFee' => 'required|numeric',
             'isAvailable' => 'required|boolean',
-            'status' => 'required|string',
-            'size' => 'required|integer',
+            'status' => 'required|in:furnished,unfurnished,partially furnished',
+            'bedrooms' => 'required|integer|min:0',
+            'bathrooms' => 'required|integer|min:0',
+            'floor' => 'required|integer|min:0',
             'location.governorate' => 'required|string',
             'location.city' => 'required|string',
             'location.district' => 'nullable|string',
             'location.street' => 'nullable|string',
+            'images' => 'sometimes|array',
+            'images.*' => 'string',
         ];
     }
 }

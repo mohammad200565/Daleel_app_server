@@ -24,12 +24,22 @@ class DepartmentController extends BaseApiController
     }
     public function store(StoreDepartmentRequest $request)
     {
-        $data = $request->validated();
-        $data['user_id'] = request()->user()->id;
-        $department = Department::create($data);
-        // i still didnt do the logic of image uploading
+        $validated = $request->validated();
+        $images = $validated['images'] ?? [];
+        unset($validated['images']);
+        $validated['user_id'] = $request->user()->id;
+        $department = Department::create($validated);
+        foreach ($images as $path) {
+            $department->images()->create([
+                'path' => $path,
+            ]);
+        }
         $department->load('images', 'user');
-        return $this->successResponse('Department created successfully', new DepartmentResource($department), 201);
+        return $this->successResponse(
+            'Department created successfully',
+            new DepartmentResource($department),
+            201
+        );
     }
     public function show(Request $request, Department $department)
     {
@@ -39,12 +49,25 @@ class DepartmentController extends BaseApiController
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
         $this->authorize('update', $department);
-        $data = $request->validated();
-        $department->update($data);
-        // i still didnt do the logic of image uploading
+        $validated = $request->validated();
+        $images = $validated['images'] ?? [];
+        unset($validated['images']);
+        $department->update($validated);
+        if (!empty($images)) {
+            $department->images()->delete();
+            foreach ($images as $path) {
+                $department->images()->create([
+                    'path' => $path,
+                ]);
+            }
+        }
         $department->load('images', 'user');
-        return $this->successResponse('Department updated successfully', new DepartmentResource($department));
+        return $this->successResponse(
+            'Department updated successfully',
+            new DepartmentResource($department)
+        );
     }
+
     public function destroy(Department $department)
     {
         $this->authorize('delete', $department);

@@ -53,7 +53,7 @@ class AuthController extends BaseApiController
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
             'profileImage' => $data['profileImage'],
-            'personId' => $data['personId'],
+            'personIdImage' => $data['personIdImage'],
             'birthdate' => $data['birthdate'],
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),

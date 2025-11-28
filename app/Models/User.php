@@ -14,11 +14,12 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'phone',
-        'personId',
+        'personIdImage',
         'profileImage',
         'birthdate',
         'password',
         'user_id',
+        'verification_state',
     ];
     protected $hidden = [
         'password',

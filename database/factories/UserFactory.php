@@ -16,7 +16,7 @@ class UserFactory extends Factory
             'last_name'  => fake('en_SA')->lastName(),
             'phone' => fake()->numerify('09########'),
             'profileImage' => fake()->imageUrl(200, 200, 'people'),
-            'personId' => fake()->unique()->numerify('###########'),
+            'personIdImage' => fake()->imageUrl(200, 200, 'Id'),
             'birthdate' => fake()->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d'),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

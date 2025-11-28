@@ -12,7 +12,7 @@ class DepartmentSeeder extends Seeder
     {
         $users = User::inRandomOrder()->take(User::count() * 0.3)->get();
         foreach ($users as $user) {
-            Department::factory()->count(1)->create([
+            Department::factory()->create([
                 'user_id' => $user->id,
             ]);
         }

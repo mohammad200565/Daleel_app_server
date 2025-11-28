@@ -13,10 +13,20 @@ class UpdateDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'string',
-            'rentFee' => 'required|numeric',
-            'isAvailable' => 'required|boolean',
-            'status' => 'required|string',
+            'description' => 'sometimes|string',
+            'area' => 'sometimes|numeric',
+            'rentFee' => 'sometimes|numeric',
+            'isAvailable' => 'sometimes|boolean',
+            'status' => 'sometimes|in:furnished,unfurnished,partially furnished',
+            'bedrooms' => 'sometimes|integer|min:0',
+            'bathrooms' => 'sometimes|integer|min:0',
+            'floor' => 'sometimes|integer|min:0',
+            'location.governorate' => 'sometimes|string',
+            'location.city' => 'sometimes|string',
+            'location.district' => 'sometimes|nullable|string',
+            'location.street' => 'sometimes|nullable|string',
+            'images' => 'sometimes|array',
+            'images.*' => 'string',
         ];
     }
 }
