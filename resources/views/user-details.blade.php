@@ -8,8 +8,8 @@
 
         .user-detail-card {
             background-color: #f5f5f5;
-            border: 2px solid #a8a78d;
-            border-radius: 12px;
+            border: 2px solid #c8a87a;
+            border-radius: 30px; /* Increased from 12px for smoother look */
             padding: 30px;
             box-shadow: 0 4px 8px rgba(93, 64, 55, 0.1);
         }
@@ -28,21 +28,21 @@
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid #a8a78d;
+            border: 4px solid #c8a87a;
         }
 
         .user-detail-initials {
             width: 150px;
             height: 150px;
             border-radius: 50%;
-            background-color: #a8a78d;
+            background-color: #c8a87a;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #5d4037;
             font-size: 48px;
             font-weight: bold;
-            border: 4px solid #a8a78d;
+            border: 4px solid #c8a87a;
         }
 
         .user-info {
@@ -101,9 +101,9 @@
         .detail-value {
             color: #5d4037;
             font-size: 16px;
-            padding: 8px 12px;
+            padding: 10px 14px; /* Increased padding */
             background-color: white;
-            border-radius: 4px;
+            border-radius: 8px; /* Increased from 4px for smoother look */
             border: 1px solid #a8a78d;
         }
 
@@ -129,7 +129,7 @@
             max-width: 100%;
             max-height: 400px;
             border: 3px solid #a8a78d;
-            border-radius: 8px;
+            border-radius: 12px; /* Increased from 8px for smoother look */
             box-shadow: 0 4px 8px rgba(93, 64, 55, 0.2);
         }
 
@@ -140,7 +140,7 @@
             padding: 20px;
             background-color: white;
             border: 1px solid #a8a78d;
-            border-radius: 4px;
+            border-radius: 8px; /* Increased from 4px for smoother look */
         }
 
         .verification-actions {
@@ -157,7 +157,7 @@
             color: white;
             border: none;
             padding: 12px 24px;
-            border-radius: 6px;
+            border-radius: 8px; /* Increased from 6px for smoother look */
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
@@ -168,7 +168,7 @@
             color: white;
             border: none;
             padding: 12px 24px;
-            border-radius: 6px;
+            border-radius: 8px; /* Increased from 6px for smoother look */
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
@@ -179,27 +179,31 @@
             color: white;
             border: none;
             padding: 12px 24px;
-            border-radius: 6px;
+            border-radius: 8px; /* Increased from 6px for smoother look */
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
         }
 
         .btn-back {
-            background-color: #a8a78d;
+            background-color: #c8a87a; /* Hazel background */
             color: #5d4037;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+            border: 2px solid #c8a87a;
+            padding: 12px 24px;
+            border-radius: 8px; /* Increased from 6px for smoother look */
             cursor: pointer;
             font-size: 14px;
             margin-bottom: 20px;
             text-decoration: none;
             display: inline-block;
+            font-weight: bold;
+            transition: all 0.3s ease;
         }
 
         .btn-back:hover {
-            background-color: #9a9980;
+            background-color: #c8a87a;
+            border-color: #c8a87a;
+            transform: translateY(-2px);
         }
 
         .user-card-link {

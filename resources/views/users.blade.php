@@ -30,7 +30,7 @@
 
         .search-box {
             padding: 10px 15px;
-            border: 2px solid #a8a78d;
+            border: 2px solid #c8a87a;
             border-radius: 6px;
             background-color: white;
             color: #5d4037;
@@ -44,9 +44,9 @@
         }
 
         .search-btn {
-            background-color: #a8a78d;
+            background-color: #c8a87a;
             color: #5d4037;
-            border: 2px solid #a8a78d;
+            border: 2px solid #c8a87a;
             padding: 10px 15px;
             border-radius: 6px;
             cursor: pointer;
@@ -56,14 +56,14 @@
         }
 
         .search-btn:hover {
-            background-color: #9a9980;
-            border-color: #9a9980;
+            background-color: #e8ba78ff;
+            border-color: #e8ba78ff;
         }
 
         .filter-btn {
-            background-color: #a8a78d;
+            background-color: #c8a87a;
             color: #5d4037;
-            border: 2px solid #a8a78d;
+            border: 2px solid #c8a87a;
             padding: 10px 20px;
             border-radius: 6px;
             cursor: pointer;
@@ -73,8 +73,8 @@
         }
 
         .filter-btn:hover {
-            background-color: #9a9980;
-            border-color: #9a9980;
+            background-color: #e8ba78ff;
+            border-color: #e8ba78ff;
         }
 
         .filter-btn.active {
@@ -86,7 +86,7 @@
         .clear-filter {
             background-color: transparent;
             color: #5d4037;
-            border: 2px solid #a8a78d;
+            border: 2px solid #c8a87a;
             padding: 10px 15px;
             border-radius: 6px;
             cursor: pointer;
@@ -96,7 +96,7 @@
         }
 
         .clear-filter:hover {
-            background-color: #a8a78d;
+            background-color: #c8a87a;
             color: #5d4037;
         }
 

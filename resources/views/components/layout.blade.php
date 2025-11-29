@@ -128,7 +128,7 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background-color: #a8a78d;
+            background-color: #c8a87a;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -139,12 +139,12 @@
         }
 
         .verification-badge.verified {
-            background-color: #4caf50;
+            background-color: #84e387ff;
             color: white;
         }
 
         .verification-badge.rejected {
-            background-color: #f44336;
+            background-color: #ec6359ff;
             color: white;
         }
 
