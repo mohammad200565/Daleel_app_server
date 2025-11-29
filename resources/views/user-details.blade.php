@@ -65,6 +65,21 @@
             margin-bottom: 20px;
         }
 
+        .verified {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .rejected {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .pending {
+            background-color: #ff9800;
+            color: white;
+        }
+
         .user-details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -92,6 +107,42 @@
             border: 1px solid #a8a78d;
         }
 
+        .id-image-section {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #a8a78d;
+        }
+
+        .id-image-title {
+            color: #5d4037;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .id-image-container {
+            text-align: center;
+        }
+
+        .id-image {
+            max-width: 100%;
+            max-height: 400px;
+            border: 3px solid #a8a78d;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(93, 64, 55, 0.2);
+        }
+
+        .no-id-image {
+            text-align: center;
+            color: #5d4037;
+            font-style: italic;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #a8a78d;
+            border-radius: 4px;
+        }
+
         .verification-actions {
             display: flex;
             gap: 15px;
@@ -114,6 +165,17 @@
 
         .btn-reject {
             background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn-pending {
+            background-color: #ff9800;
             color: white;
             border: none;
             padding: 12px 24px;
@@ -167,8 +229,17 @@
                 
                 <div class="user-info">
                     <h1 class="user-detail-name">{{ $user->first_name }} {{ $user->last_name }}</h1>
-                    <div class="user-detail-badge {{ $user->verification_state=="verified" ? 'verified' : 'not-verified' }}">
-                        {{ $user->verification_state=="verified" ? '✓ Verified User' : '✗ Not Verified' }}
+                    <div class="user-detail-badge 
+                        @if($user->verification_state === 'verified') verified
+                        @elseif($user->verification_state === 'rejected') rejected
+                        @else pending @endif">
+                        @if($user->verification_state === 'verified')
+                            ✓ Verified User
+                        @elseif($user->verification_state === 'rejected')
+                            ✗ Rejected
+                        @else
+                            ⏳ Pending Verification
+                        @endif
                     </div>
                 </div>
             </div>
@@ -185,13 +256,8 @@
                 </div>
                 
                 <div class="detail-item">
-                    <div class="detail-label">Email</div>
-                    <div class="detail-value">{{ $user->email ?? 'N/A' }}</div>
-                </div>
-                
-                <div class="detail-item">
-                    <div class="detail-label">User ID</div>
-                    <div class="detail-value">#{{ $user->id }}</div>
+                    <div class="detail-label">Phone Number</div>
+                    <div class="detail-value">{{ $user->phone_number ?? 'N/A' }}</div>
                 </div>
                 
                 <div class="detail-item">
@@ -205,7 +271,20 @@
                 </div>
             </div>
 
-            @if(!($user->verification_state=="verified"))
+            <!-- Person ID Image Section -->
+            <div class="id-image-section">
+                <div class="id-image-title">Person ID Document</div>
+                <div class="id-image-container">
+                    @if($user->person_id_image)
+                        <img src="{{ asset('storage/' . $user->person_id_image) }}" alt="Person ID Document" class="id-image">
+                    @else
+                        <div class="no-id-image">No ID document uploaded</div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Verification Actions -->
+            @if($user->verification_state === 'pending')
                 <div class="verification-actions">
                     <form action="{{ route('users.verify', $user) }}" method="POST" style="display: inline;">
                         @csrf
@@ -219,11 +298,21 @@
                         <button type="submit" class="btn-reject">✗ Reject Verification</button>
                     </form>
                 </div>
+            @elseif($user->verification_state === 'rejected')
+                <div class="verification-actions">
+                    <form action="{{ route('users.verify', $user) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn-verify">✓ Verify User</button>
+                    </form>
+                </div>
             @else
                 <div class="verification-actions">
-                    <div style="color: #4caf50; font-weight: bold; font-size: 18px;">
-                        ✓ This user is already verified
-                    </div>
+                    <form action="{{ route('users.reject', $user) }}" method="POST" style="display: inline;">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn-reject">✗ Reject Verification</button>
+                    </form>
                 </div>
             @endif
         </div>

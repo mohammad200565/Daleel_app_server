@@ -138,6 +138,21 @@
             font-size: 24px;
         }
 
+        .verification-badge.verified {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .verification-badge.rejected {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .verification-badge.pending {
+            background-color: #ff9800;
+            color: white;
+        }
+
         .text-brown { color: var(--brown); }
         .text-light-brown { color: var(--light-brown); }
         .text-dark-brown { color: var(--dark-brown); }

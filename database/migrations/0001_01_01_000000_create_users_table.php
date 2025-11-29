@@ -14,10 +14,10 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('profileImage')->nullable();
-            $table->string('personIdImage');
+            $table->string('personIdImage')->nullable();
             $table->string('phone')->unique();
             $table->string('email')->unique()->nullable();
-            $table->date('birthdate');
+            $table->date('birthdate')->nullable();
             $table->enum('verification_state', ['verified', 'pending', 'rejected'])->default('pending');
             $table->string('password');
             $table->rememberToken();

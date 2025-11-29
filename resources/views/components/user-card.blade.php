@@ -1,11 +1,9 @@
 @props(['user'])
 
-<a href="/users/{{$user->id}}" class="user-card-link">
+<a href="{{ route('users.show', $user) }}" class="user-card-link">
     <div class="user-card">
         @if($user->profile_image)
-            <img src="{{ asset('storage/' . $user->profile_image) }}" 
-                 alt="{{ $user->first_name }} {{ $user->last_name }}" 
-                 class="user-image">
+            <img src="{{ asset('storage/' . $user->profile_image) }}" alt="{{ $user->first_name }} {{ $user->last_name }}" class="user-image">
         @else
             <div class="user-initials">
                 {{ substr($user->first_name, 0, 1) }}{{ substr($user->last_name, 0, 1) }}
@@ -17,8 +15,16 @@
         </div>
         
         <div class="verification-badge 
-            {{ $user->verification_state == 'verified' ? 'verified' : ($user->verification_state == 'rejected' ? 'rejected' : 'pending') }}">
-            {{ ucfirst($user->verification_state) }}
+            @if($user->verification_state === 'verified') verified
+            @elseif($user->verification_state === 'rejected') rejected
+            @else pending @endif">
+            @if($user->verification_state === 'verified')
+                Verified
+            @elseif($user->verification_state === 'rejected')
+                Rejected
+            @else
+                Pending
+            @endif
         </div>
     </div>
 </a>

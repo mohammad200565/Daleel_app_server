@@ -6,6 +6,100 @@
             margin: 0 auto;
         }
 
+        .users-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .users-title {
+            color: #5d4037;
+            text-align: center;
+            margin: 0;
+        }
+
+        .search-filter-container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            padding: 10px 15px;
+            border: 2px solid #a8a78d;
+            border-radius: 6px;
+            background-color: white;
+            color: #5d4037;
+            font-size: 14px;
+            width: 250px;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #5d4037;
+        }
+
+        .search-btn {
+            background-color: #a8a78d;
+            color: #5d4037;
+            border: 2px solid #a8a78d;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background-color: #9a9980;
+            border-color: #9a9980;
+        }
+
+        .filter-btn {
+            background-color: #a8a78d;
+            color: #5d4037;
+            border: 2px solid #a8a78d;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            background-color: #9a9980;
+            border-color: #9a9980;
+        }
+
+        .filter-btn.active {
+            background-color: #5d4037;
+            color: #f5f5f5;
+            border-color: #5d4037;
+        }
+
+        .clear-filter {
+            background-color: transparent;
+            color: #5d4037;
+            border: 2px solid #a8a78d;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .clear-filter:hover {
+            background-color: #a8a78d;
+            color: #5d4037;
+        }
+
         .users-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -51,12 +145,13 @@
             color: white;
         }
 
-        .pending {
-            background-color: #b505f5;
-            color: white;
-        }
         .rejected {
             background-color: #f44336;
+            color: white;
+        }
+
+        .pending {
+            background-color: #ff9800;
             color: white;
         }
 
@@ -65,20 +160,97 @@
             color: #5d4037;
             font-size: 18px;
             margin-top: 50px;
+            grid-column: 1 / -1;
+        }
+
+        .active-filters {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-info {
+            color: #5d4037;
+            font-size: 14px;
+            background-color: #a8a78d;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .user-phone {
+            color: #5d4037;
+            font-size: 14px;
+            margin-top: 8px;
         }
     </style>
 
     <div class="users-container">
-        <h1 style="color: #5d4037; text-align: center;">Users</h1>
+        <div class="users-header">
+            <h1 class="users-title">Users</h1>
+            
+            <div class="search-filter-container">
+                <!-- Search Form -->
+                <form method="GET" action="{{ route('users.index') }}" style="display: flex; gap: 10px;">
+                    @if(request('filter') === 'pending')
+                        <input type="hidden" name="filter" value="pending">
+                    @endif
+                    <input 
+                        type="text" 
+                        name="search" 
+                        class="search-box" 
+                        placeholder="Search by name..." 
+                        value="{{ request('search') }}"
+                    >
+                    <button type="submit" class="search-btn">
+                        Search
+                    </button>
+                </form>
+                
+                <!-- Pending Filter Form -->
+                <form method="GET" action="{{ route('users.index') }}" style="display: inline;">
+                    @if(request('search'))
+                        <input type="hidden" name="search" value="{{ request('search') }}">
+                    @endif
+                    <button 
+                        type="submit" 
+                        name="filter" 
+                        value="{{ request('filter') === 'pending' ? '' : 'pending' }}" 
+                        class="filter-btn {{ request('filter') === 'pending' ? 'active' : '' }}"
+                    >
+                        {{ request('filter') === 'pending' ? 'Show All Users' : 'Show Pending Only' }}
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Active Filters Display -->
+        @if(request('search') || request('filter') === 'pending')
+            <div class="active-filters">
+                <span class="filter-info">
+                    Active filters:
+                    @if(request('search'))
+                        Search: "{{ request('search') }}"
+                    @endif
+                    @if(request('filter') === 'pending')
+                        {{ request('search') ? ' | ' : '' }}Pending Users Only
+                    @endif
+                </span>
+                <a href="{{ route('users.index') }}" class="clear-filter">Clear All Filters</a>
+            </div>
+        @endif
         
         <div class="users-grid">
-            @forelse($users as $index => $user)
-                @if($index > 0) 
-                    <x-user-card :user="$user" />
-                @endif
+            @forelse($users as $user)
+                <x-user-card :user="$user" />
             @empty
                 <div class="no-users">
-                    No users found in the database.
+                    @if(request('search') || request('filter') === 'pending')
+                        No users found matching your criteria.
+                    @else
+                        No users found in the database.
+                    @endif
                 </div>
             @endforelse
         </div>
