@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('floor');
             $table->decimal('rentFee', 10, 2);
             $table->boolean('isAvailable')->default(true);
-            $table->integer('favoritesCount');
+            $table->integer('favoritesCount')->default(0);
             $table->enum('status', ['furnished', 'unfurnished', 'partially furnished']);
             $table->timestamps();
             $table->json('location');

@@ -20,7 +20,7 @@ class UpdateDepartmentRequest extends FormRequest
             'status' => 'sometimes|in:furnished,unfurnished,partially furnished',
             'bedrooms' => 'sometimes|integer|min:0',
             'bathrooms' => 'sometimes|integer|min:0',
-            'floor' => 'sometimes|integer|min:0',
+            'floor' => 'sometimes|integer',
             'location.governorate' => 'sometimes|string',
             'location.city' => 'sometimes|string',
             'location.district' => 'sometimes|nullable|string',

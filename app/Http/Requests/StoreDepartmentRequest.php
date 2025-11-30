@@ -14,14 +14,14 @@ class StoreDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required|string',
+            'description' => 'string',
             'area' => 'required|numeric',
             'rentFee' => 'required|numeric',
             'isAvailable' => 'required|boolean',
             'status' => 'required|in:furnished,unfurnished,partially furnished',
             'bedrooms' => 'required|integer|min:0',
             'bathrooms' => 'required|integer|min:0',
-            'floor' => 'required|integer|min:0',
+            'floor' => 'required|integer',
             'location.governorate' => 'required|string',
             'location.city' => 'required|string',
             'location.district' => 'nullable|string',
