@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory(100)->create();
         $this->call(DepartmentSeeder::class);
+        for($i=0;$i<500;$i++) {
+            User::inRandomOrder()->first()?->favorites()->toggle(Department::inRandomOrder()->first()?->id);
+        }
         $this->call(ReviewSeeder::class);
         $this->call(NotificationSeeder::class);
         $this->call(RentSeeder::class);

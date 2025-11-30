@@ -23,7 +23,7 @@ class FavoriteController extends BaseApiController
             $department->save();
             return $this->successResponse('Removed from favorites');
         }
-        $favorite = $user->favorites()->attach($department['id']);
+        $user->favorites()->attach($department['id']);
         $department['favoritesCount'] += 1;
         $department->save();
         return $this->successResponse('Added to favorites', [], 201);
