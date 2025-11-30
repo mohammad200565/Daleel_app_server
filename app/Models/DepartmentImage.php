@@ -8,7 +8,7 @@ class DepartmentImage extends Model
 {
     protected $fillable = [
         'department_id',
-        'image_path',
+        'path',
     ];
     public function department()
     {
