@@ -264,11 +264,11 @@
                 </div>
             @endforelse
 
-            @if($departments->hasPages())
-                <div class="pagination-container" style="margin-top: 30px; display: flex; justify-content: center;">
-                    {{ $departments->withQueryString()->links('vendor.pagination.default') }}
-                </div>
-            @endif
         </div>
+        @if($departments->hasPages())
+            <div class="pagination-container" style="margin-top: 30px; display: flex; justify-content: center;">
+                {{ $departments->withQueryString()->links('vendor.pagination.default') }}
+            </div>
+        @endif
     </div>
 </x-layout>

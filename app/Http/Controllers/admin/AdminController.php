@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Department;
+use App\Models\Rent;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,6 +70,57 @@ class AdminController extends Controller
 
     public function showDepartment(Department $department){
         return view('department-details', compact('department'));
+    }
+
+    public function indexContract(Request $request){
+        $query = Rent::with([
+            'user:id,first_name,last_name,phone,verification_state',
+            'department:id,area,bedrooms,bathrooms,floor,status,location,description,verification_state,user_id',
+            'department.user:id,first_name,last_name,phone,verification_state'
+        ]);
+        
+        if ($request->has('search') && !empty($request->search)) {
+            $searchTerm = $request->search;
+            
+            $query->where(function($q) use ($searchTerm) {
+                $q->whereHas('user', function($tenantQuery) use ($searchTerm) {
+                    $tenantQuery->where('first_name', 'LIKE', "%{$searchTerm}%")
+                                ->orWhere('last_name', 'LIKE', "%{$searchTerm}%");
+                })
+                ->orWhereHas('department.user', function($ownerQuery) use ($searchTerm) {
+                    $ownerQuery->where('first_name', 'LIKE', "%{$searchTerm}%")
+                               ->orWhere('last_name', 'LIKE', "%{$searchTerm}%");
+                })
+                ->orWhereHas('department', function($deptQuery) use ($searchTerm) {
+                    $deptQuery->where('location->city', 'LIKE', "%{$searchTerm}%")
+                              ->orWhere('location->district', 'LIKE', "%{$searchTerm}%")
+                              ->orWhere('location->street', 'LIKE', "%{$searchTerm}%");
+                });
+            });
+        }
+        
+        if ($request->has('filter') && !empty($request->filter)) {
+            $query->where('status', $request->filter);
+        }
+        
+        $query->orderBy('created_at', 'desc');
+        
+        $rents = $query->paginate(10);
+        
+        $rents->appends($request->query());
+        
+        return view('contracts', compact('rents'));
+    }
+
+    public function showContract(Rent $rent){
+        $rent->load([
+            'user:id,first_name,last_name,phone,verification_state',
+            'department.user:id,first_name,last_name,phone,verification_state',
+            'department:id,area,bedrooms,bathrooms,floor,status,location,description,verification_state,user_id',
+            'department.images:id,path'
+        ]);
+        
+        return view('contract-details', compact('rent'));
     }
 
     public function verifyDepartment(Department $department)

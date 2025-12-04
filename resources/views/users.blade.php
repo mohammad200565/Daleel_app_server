@@ -254,11 +254,11 @@
                 </div>
             @endforelse
             
-            @if($users->hasPages())
-                <div class="pagination-container" style="margin-top: 30px; display: flex; justify-content: center;">
-                    {{ $users->withQueryString()->links('vendor.pagination.default') }}
-                </div>
-            @endif
         </div>
+        @if($users->hasPages())
+            <div class="justify-center">
+                {{ $users->withQueryString()->links('vendor.pagination.default') }}
+            </div>
+        @endif
     </div>
 </x-layout>

@@ -11,11 +11,24 @@
             {{ $department->location['city'] ?? 'N/A' }}, {{ $department->location['district'] ?? 'N/A' }}
         </div>
         
+        <!-- Updated Department Specs with Labels -->
         <div class="department-specs">
-            <span class="spec-item">{{ $department->area }}m²</span>
-            <span class="spec-item">{{ $department->bedrooms }} BD</span>
-            <span class="spec-item">{{ $department->bathrooms }} BA</span>
-            <span class="spec-item">Floor {{ $department->floor }}</span>
+            <div class="spec-item">
+                <span class="spec-value">{{ $department->area }}</span>
+                <span class="spec-label">m²</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-value">{{ $department->bedrooms }}</span>
+                <span class="spec-label">Bed</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-value">{{ $department->bathrooms }}</span>
+                <span class="spec-label">Bath</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-value">{{ $department->floor }}</span>
+                <span class="spec-label">Floor</span>
+            </div>
         </div>
         
         <div class="department-rent">

@@ -153,6 +153,29 @@
             color: white;
         }
 
+        .verification-indicator {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .verification-indicator.verified {
+            background-color: #4caf50;
+            color: white;
+        }
+
+        .verification-indicator.rejected {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .verification-indicator.pending {
+            background-color: #ff9800;
+            color: white;
+        }
+
         .text-brown { color: var(--brown); }
         .text-light-brown { color: var(--light-brown); }
         .text-dark-brown { color: var(--dark-brown); }

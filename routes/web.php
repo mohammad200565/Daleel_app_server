@@ -24,3 +24,8 @@ Route::prefix('departments')->name('departments.')->group(function () {
     Route::put('/{department}/verify', [AdminController::class, 'verifyDepartment'])->name('verify');
     Route::put('/{department}/reject', [AdminController::class, 'rejectDepartment'])->name('reject');
 });
+
+Route::prefix('contracts')->name('contracts.')->group(function(){
+    Route::get('/', [AdminController::class, 'indexContract'])->name('index');
+    Route::get('/{rent}', [AdminController::class, 'showContract'])->name('show');
+});
