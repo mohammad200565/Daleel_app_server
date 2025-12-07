@@ -15,6 +15,7 @@ class UserFactory extends Factory
             'first_name' => fake('en_SA')->firstName(),
             'last_name'  => fake('en_SA')->lastName(),
             'phone' => fake()->numerify('09########'),
+            'location' => fake()->randomElement(['Damascus', 'Aleppo', 'Homs', 'Latakia']),
             'profileImage' => fake()->imageUrl(200, 200, 'people'),
             'personIdImage' => fake()->imageUrl(200, 200, 'Id'),
             'birthdate' => fake()->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d'),

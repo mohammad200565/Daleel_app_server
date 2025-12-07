@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'verification_state' => 'verified',
             'phone' => '0933995477',
             'email' => 'daleel@admin.com',
+            'location' => 'Homs',
             'password' => Hash::make('Daleel2025@DaleelAdmin'),
         ]);
         User::factory(100)->create();

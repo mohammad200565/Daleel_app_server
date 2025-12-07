@@ -16,6 +16,7 @@ class RegisterRequest extends FormRequest
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'phone' => 'required|string|unique:users',
+            'location' => 'string',
             'profileImage' => 'nullable|url',
             'personIdImage' => 'required|string|unique:users',
             'birthdate' => 'required|date',
