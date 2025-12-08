@@ -334,7 +334,7 @@
         <a href="/" class="logo">Daleel Admins</a>
         
         <div class="nav-buttons">
-            <a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Home</a>
+            <a href="/" class="nav-link {{ request()->is('/') ? 'active' : '' }}">Recent</a>
             <a href="/users" class="nav-link {{ request()->is('users') ? 'active' : '' }}">Users</a>
             <a href="/departments" class="nav-link {{ request()->is('departments') ? 'active' : '' }}">Departments</a>
             <a href="/contracts" class="nav-link {{ request()->is('contracts') ? 'active' : '' }}">Contracts</a>

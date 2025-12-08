@@ -361,7 +361,7 @@
                     <div class="images-grid">
                         @foreach($department->images as $image)
                             <div class="image-item">
-                                <img src="{{ asset('departments_images/' . $image->path) }}" 
+                                <img src="{{ $image->path }}" 
                                     alt="Department Image {{ $loop->iteration }}"
                                     class="department-image"
                                     onclick="openImageModal(this)">

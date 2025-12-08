@@ -224,7 +224,7 @@
         <div class="user-detail-card">
             <div class="user-header">
                 @if($user->profile_image)
-                    <img src="{{ asset('storage/' . $user->profile_image) }}" alt="{{ $user->first_name }} {{ $user->last_name }}" class="user-detail-image">
+                    <img src="{{$user->profile_image}}" alt="{{ $user->first_name }} {{ $user->last_name }}" class="user-detail-image">
                 @else
                     <div class="user-detail-initials">
                         {{ substr($user->first_name, 0, 1) }}{{ substr($user->last_name, 0, 1) }}
@@ -280,7 +280,7 @@
                 <div class="id-image-title">Person ID Document</div>
                 <div class="id-image-container">
                     @if($user->person_id_image)
-                        <img src="{{ asset('storage/' . $user->person_id_image) }}" alt="Person ID Document" class="id-image">
+                        <img src="{{$user->person_id_image}}" alt="Person ID Document" class="id-image">
                     @else
                         <div class="no-id-image">No ID document uploaded</div>
                     @endif

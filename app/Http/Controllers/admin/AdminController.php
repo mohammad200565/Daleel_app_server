@@ -11,7 +11,29 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
-{
+{   
+    public function showRecent(){
+        $recentUsers = User::where('id', '!=', 1)
+            ->latest()
+            ->take(6)
+            ->get();
+        
+        $recentDepartments = Department::with('user:id,first_name,last_name')
+            ->latest()
+            ->take(5)
+            ->get();
+        
+        $recentContracts = Rent::with([
+                'user:id,first_name,last_name',
+                'department:id,area,bedrooms,bathrooms,floor,location',
+                'department.user:id,first_name,last_name'
+            ])
+            ->latest()
+            ->take(6)
+            ->get();
+        
+        return view('recent', compact('recentUsers', 'recentDepartments', 'recentContracts'));
+    }
 
     public function indexUsers(Request $request)
     {
