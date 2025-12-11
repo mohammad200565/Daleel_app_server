@@ -38,6 +38,10 @@ class Department extends Model
     {
         return $this->hasMany(Review::class);
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     public function images()
     {
