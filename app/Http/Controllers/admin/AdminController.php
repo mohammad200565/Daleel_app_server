@@ -155,7 +155,6 @@ class AdminController extends Controller
 
         $department->verification_state = 'verified';
         $department->save();
-
         return redirect('/departments/' . $department->id)
             ->with('success', 'Department has been verified successfully!');
     }

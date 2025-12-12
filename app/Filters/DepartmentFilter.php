@@ -50,22 +50,18 @@ class DepartmentFilter
     {
         return $this->builder->where('bedrooms', $value);
     }
-
     private function filterBathrooms($value)
     {
         return $this->builder->where('bathrooms', $value);
     }
-
     private function filterFloor($value)
     {
         return $this->builder->where('floor', $value);
     }
-
     private function filterMin_area($value)
     {
         return $this->builder->where('area', '>=', $value);
     }
-
     private function filterMax_area($value)
     {
         return $this->builder->where('area', '<=', $value);
@@ -96,7 +92,6 @@ class DepartmentFilter
     {
         return $this->builder->where('rentFee', '<=', $value);
     }
-
     private function filterSort($value)
     {
         switch ($value) {

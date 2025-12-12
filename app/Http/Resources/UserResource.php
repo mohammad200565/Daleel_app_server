@@ -14,11 +14,16 @@ class UserResource extends JsonResource
             'id' => $this->resource->id,
             'first_name' => $this->resource->first_name,
             'last_name' => $this->resource->last_name,
-            'location' => $this->resource->location,
             'phone' => $this->resource->phone,
             'personIdImage' => $this->resource->personIdImage ? Storage::url($this->resource->personIdImage) : null,
             'profileImage' => $this->resource->profileImage ? Storage::url($this->resource->profileImage) : null,
             'birthdate' => $this->resource->birthdate,
+            'location' => [
+                'governorate' => $this->resource->location['governorate'] ?? null,
+                'city' => $this->resource->location['city'] ?? null,
+                'district' => $this->resource->location['district'] ?? null,
+                'street' => $this->resource->location['street'] ?? null,
+            ],
         ];
         return $data;
     }

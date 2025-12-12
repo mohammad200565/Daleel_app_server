@@ -21,6 +21,9 @@ class Department extends Model
         'floor',
         'headDescription'
     ];
+    protected $guarded = [
+        'verification_state'
+    ];
     protected $casts = [
         'location' => 'array',
     ];

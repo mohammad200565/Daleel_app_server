@@ -20,6 +20,7 @@ class DepartmentResource extends JsonResource
             'floor' => $this->resource->floor,
             'rentFee' => $this->resource->rentFee,
             'isAvailable' => $this->resource->isAvailable,
+            'verification_state' => $this->resource->isAvailable,
             'status' => $this->resource->status,
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,

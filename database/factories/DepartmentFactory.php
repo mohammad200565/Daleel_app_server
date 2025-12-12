@@ -16,7 +16,6 @@ class DepartmentFactory extends Factory
             'description' => $this->faker->sentence(6),
             'area' => $this->faker->numberBetween(70, 200),
             'location' => [
-                'country' => 'Syria',
                 'governorate' => $this->faker->randomElement(['Damascus', 'Aleppo', 'Homs', 'Latakia']),
                 'city' => $this->faker->city,
                 'district' => $this->faker->word,

@@ -13,7 +13,7 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('location')->nullable();
+            $table->json('location')->nullable();
             $table->string('profileImage')->nullable();
             $table->string('personIdImage')->nullable();
             $table->string('phone')->unique();
