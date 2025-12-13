@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\Department;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class DepartmentPolicy
 {
@@ -18,7 +19,7 @@ class DepartmentPolicy
     }
     public function create(User $user): bool
     {
-        return $user->verification_state == "verified";
+        return Request()->user()->verification_state == "verified";
     }
     public function update(User $user, Department $department): bool
     {

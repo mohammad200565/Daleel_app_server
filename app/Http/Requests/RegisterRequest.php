@@ -16,6 +16,7 @@ class RegisterRequest extends FormRequest
             'first_name'     => 'required|string|max:255',
             'last_name'      => 'required|string|max:255',
             'birthdate'      => 'required|date',
+            'location' => 'required',
             'location.governorate' => 'required|string',
             'location.city' => 'required|string',
             'location.district' => 'nullable|string',

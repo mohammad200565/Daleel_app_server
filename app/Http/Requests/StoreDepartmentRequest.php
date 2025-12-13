@@ -23,6 +23,7 @@ class StoreDepartmentRequest extends FormRequest
             'bedrooms' => 'required|integer|min:0',
             'bathrooms' => 'required|integer|min:0',
             'floor' => 'required|integer',
+            'location' => 'required',
             'location.governorate' => 'required|string',
             'location.city' => 'required|string',
             'location.district' => 'nullable|string',
