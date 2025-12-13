@@ -19,7 +19,7 @@ class DepartmentPolicy
     }
     public function create(User $user): bool
     {
-        return Request()->user()->verification_state == "verified";
+        return $user->verification_state == "verified";
     }
     public function update(User $user, Department $department): bool
     {
