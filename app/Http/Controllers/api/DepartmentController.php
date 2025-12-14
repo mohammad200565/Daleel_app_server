@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class DepartmentController extends BaseApiController
 {
-    private $relations = ['images', 'reviews', 'user', 'comments'];
+    private $relations = ['images', 'reviews', 'user', 'comments', 'rents'];
     public function index(Request $request)
     {
         $filters = new DepartmentFilter($request);

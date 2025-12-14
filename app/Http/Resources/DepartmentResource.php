@@ -48,6 +48,12 @@ class DepartmentResource extends JsonResource
         if ($this->resource->relationLoaded('reviews')) {
             $data['reviews'] = ReviewResource::collection($this->resource->reviews);
         }
+        if ($this->resource->relationLoaded('comments')) {
+            $data['comments'] = CommentResource::collection($this->resource->comments);
+        }
+        if ($this->resource->relationLoaded('rents')) {
+            $data['rents'] = RentResource::collection($this->resource->rents);
+        }
 
         return $data;
     }
