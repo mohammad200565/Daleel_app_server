@@ -11,11 +11,11 @@ class CommentResource extends JsonResource
     {
         $data = [
             'id' => $this->resource->id,
-            'user' => new UserResource($this->whenLoaded('user')),
-            'department' => new DepartmentResource($this->whenLoaded('department')),
             'content' => $this->resource->content,
             'created_at' => $this->resource->created_at,
             'updated_at' => $this->resource->updated_at,
+            'user' => new UserResource($this->whenLoaded('user')),
+            'department' => new DepartmentResource($this->whenLoaded('department')),
         ];
         return $data;
     }

@@ -16,7 +16,7 @@ class ReviewController extends BaseApiController
     public function index(Request $request, Department $department)
     {
         $filter = new ReviewFilter($request);
-        $query = $department->reviews();
+        $query = $department->reviews()->getQuery();
         $reviews = $this->loadRelations($request, $query, $this->relations)->filter($filter)->paginate(20);
         return $this->successResponse('Reviews retrieved successfully', ReviewResource::collection($reviews));
     }
