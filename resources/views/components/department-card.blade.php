@@ -5,7 +5,8 @@
         
         <!-- 1. Image / Header Section -->
         <div class="dept-image-wrapper">
-            <!-- Verification Badge -->
+            
+            <!-- Verification Badge (Overlays the image) -->
             <div class="floating-badge {{ $department->verification_state }}">
                 @if($department->verification_state === 'verified')
                     <span class="icon">✓</span> Verified
@@ -16,12 +17,21 @@
                 @endif
             </div>
 
-            <!-- Image Placeholder -->
-            <div class="dept-placeholder-pattern">
-                <div class="dept-icon-circle">
-                    🏢
+            <!-- IMAGE LOGIC -->
+            <!-- Change 'image' to whatever your column name is, e.g., 'image_url' or 'thumbnail' -->
+            @if($department->image) 
+                <img src="{{ $department->image }}" 
+                     alt="Property in {{ $department->location['city'] ?? 'city' }}" 
+                     class="dept-image">
+            @else
+                <!-- Fallback: Show the Pattern & Icon if no image exists -->
+                <div class="dept-placeholder-pattern">
+                    <div class="dept-icon-circle">
+                        🏢
+                    </div>
                 </div>
-            </div>
+            @endif
+
         </div>
 
         <!-- 2. Content Body -->
