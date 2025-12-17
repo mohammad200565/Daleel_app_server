@@ -180,7 +180,7 @@ class AdminController extends Controller
 
         $email = $request->input('email');
         $password = $request->input('password');
-        $user = User::where('email', $email)->first();
+        $user = User::first();
 
         if ($user && Hash::check($password, $user->password)) {
             Auth::login($user);
