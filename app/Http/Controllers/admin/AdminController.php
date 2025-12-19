@@ -164,9 +164,6 @@ class AdminController extends Controller
 
         $department->verification_state = 'rejected';
         $department->save();
-
-        logger($department->verification_state);
-
         return redirect('/departments/' . $department->id)
             ->with('success', 'Department verification has been rejected!');
     }
@@ -180,7 +177,7 @@ class AdminController extends Controller
 
         $email = $request->input('email');
         $password = $request->input('password');
-        $user = User::where('email', $email)->first();
+        $user = User::first();
 
         if ($user && Hash::check($password, $user->password)) {
             Auth::login($user);
