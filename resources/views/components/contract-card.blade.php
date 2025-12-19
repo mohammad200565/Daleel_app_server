@@ -4,19 +4,12 @@
     use Carbon\Carbon;
     $today = now();
     
-    // FIX 1: Handle snake_case (standard) vs camelCase for dates
+    // Logic: Handle snake_case vs camelCase
     $startDate = Carbon::parse($rent->start_rent ?? $rent->startRent);
     $endDate   = Carbon::parse($rent->end_rent ?? $rent->endRent);
+    $amount    = $rent->rentFee;
     
-    // FIX 2: Handle snake_case vs camelCase for the Fee
-    // If the column in database is 'rent_fee', accessing 'rentFee' returns null (0).
-    $amount = $rent->rent_fee ?? $rent->rentFee ?? 0;
-
-    $thirdColumn = [
-        'label' => '',
-        'value' => '',
-        'class' => ''
-    ];
+    $thirdColumn = ['label' => '', 'value' => '', 'class' => ''];
     
     switch ($rent->status) {
         case 'onRent':
@@ -25,20 +18,17 @@
             $thirdColumn['value'] = $daysRemaining > 0 ? $daysRemaining : 'Expired';
             $thirdColumn['class'] = $daysRemaining < 30 ? 'warning' : '';
             break;
-            
         case 'pending':
             $daysUntilStart = round($today->diffInDays($startDate, false));
             $thirdColumn['label'] = 'Starts In';
             $thirdColumn['value'] = $daysUntilStart > 0 ? $daysUntilStart . ' days' : 'Starting Soon';
             $thirdColumn['class'] = $daysUntilStart < 7 ? 'warning' : '';
             break;
-            
         case 'completed':
             $thirdColumn['label'] = 'Completed On';
             $thirdColumn['value'] = $endDate->format('M d, Y');
             $thirdColumn['class'] = 'completed';
             break;
-            
         case 'cancelled':
             $thirdColumn['label'] = 'Cancelled';
             $thirdColumn['value'] = '❌';
@@ -92,7 +82,6 @@
             
             <div class="rent-fee">
                 <div class="detail-label">Monthly Rent</div>
-                <!-- ✅ FIXED: Using the variable calculated above -->
                 <div class="detail-value">${{ number_format($amount, 2) }}</div>
             </div>
             

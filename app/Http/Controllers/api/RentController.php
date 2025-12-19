@@ -10,6 +10,7 @@ use App\Models\Department;
 use App\Models\Rent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RentController extends BaseApiController
 {
@@ -23,9 +24,12 @@ class RentController extends BaseApiController
             ->filter($filters)->paginate(15);
         return $this->successResponse("Rents fetched successfully", RentResource::collection($rents),);
     }
+
+
     public function store(StoreRentRequest $request)
     {
         $data = $request->validated();
+        $user = request()->user();
         $overlap = Rent::where('department_id', $data['department_id'])
             ->where('status', 'onRent')
             ->where(function ($query) use ($data) {
@@ -33,21 +37,39 @@ class RentController extends BaseApiController
                     ->where('endRent', '>=', $data['startRent']);
             })
             ->exists();
-
         if ($overlap) {
-            return $this->errorResponse("This house is rented during this period, please choose another time.", 422);
+            return $this->errorResponse(
+                "This house is rented during this period, please choose another time.",
+                422
+            );
         }
-        $data['user_id'] = request()->user()->id;
-        $department = Department::find($data['department_id']);
+        $department = Department::findOrFail($data['department_id']);
         $start = Carbon::parse($data['startRent']);
         $end = Carbon::parse($data['endRent']);
         $totalDays = $start->diffInDays($end) + 1;
-        $data['rentFee'] = $department->rentFee * $totalDays;
-        $rent = Rent::create($data);
-        $department->increment('rentCounter');
+        $totalRentFee = $department->rentFee * $totalDays;
+        if (!$user->wallet_balance || $user->wallet_balance->balance < $totalRentFee) {
+            return $this->errorResponse(
+                "Insufficient balance in your wallet to rent this Department.",
+                422
+            );
+        }
+        $data['user_id'] = $user->id;
+        $data['rentFee'] = $totalRentFee;
+
+        $rent = DB::transaction(function () use ($department, $data) {
+            $rent = Rent::create($data);
+            $department->increment('rentCounter');
+            return $rent;
+        });
         $rent->load('department', 'user');
-        return $this->successResponse("Rent created successfully", new RentResource($rent));
+        return $this->successResponse(
+            "Rent created successfully",
+            new RentResource($rent)
+        );
     }
+
+
     public function show(Request $request, Rent $rent)
     {
         $this->authorize('view', $rent);
@@ -57,10 +79,26 @@ class RentController extends BaseApiController
     public function update(UpdateRentRequest $request, Rent $rent)
     {
         $this->authorize('update', $rent);
-        $rent->update($request->validated());
+        if ($rent->status !== 'pending') {
+            return $this->errorResponse(
+                "Only rents with status 'pending' can be updated.",
+                422
+            );
+        }
+        $data = $request->validated();
+        $department = $rent->department;
+        $start = Carbon::parse($rent->startRent);
+        $end = Carbon::parse($rent->endRent);
+        $totalDays = $start->diffInDays($end) + 1;
+        $data['rentFee'] = $department->rentFee * $totalDays;
+        $rent->update($data);
         $rent->load('department', 'user');
-        return $this->successResponse("Rent updated successfully", new RentResource($rent));
+        return $this->successResponse(
+            "Rent updated successfully",
+            new RentResource($rent)
+        );
     }
+
     public function destroy(Rent $rent)
     {
         $this->authorize('delete', $rent);
@@ -84,25 +122,48 @@ class RentController extends BaseApiController
     public function approveRent(Request $request, Rent $rent)
     {
         $this->authorize('approveRent', $rent);
+
         if ($rent->status !== 'pending') {
-            return $this->errorResponse("Only rents with status 'pending' can be approved.", 422);
+            return $this->errorResponse(
+                "Only rents with status 'pending' can be approved.",
+                422
+            );
         }
+
         $department = $rent->department;
-        $overlap = Rent::where('department_id', $department->id)->where('status', 'onRent')
+        $overlap = Rent::where('department_id', $department->id)
+            ->where('status', 'onRent')
             ->where(function ($query) use ($rent) {
                 $query->where('startRent', '<=', $rent->endRent)
                     ->where('endRent', '>=', $rent->startRent);
             })
             ->exists();
+
         if ($overlap) {
             return $this->errorResponse("This house is rented during this period", 422);
         }
-        $rent->status = 'onRent';
-        $department->isAvailable = false;
-        $department->save();
-        $rent->save();
+        $user = $rent->user;
+        if ($user->wallet_balance < $rent->rentFee) {
+            return $this->errorResponse(
+                "User has insufficient balance in their wallet to approve this rent.",
+                422
+            );
+        }
+
+        DB::transaction(function () use ($rent, $department, $user) {
+            $user->decrement('wallet_balance', $rent->rentFee);
+            $rent->status = 'onRent';
+            $department->isAvailable = false;
+
+            $department->save();
+            $rent->save();
+        });
+
         $rent->load('department', 'user');
-        return $this->successResponse("Rent approved successfully", new RentResource($rent));
+        return $this->successResponse(
+            "Rent approved successfully",
+            new RentResource($rent)
+        );
     }
     public function rejectRent(Request $request, Rent $rent)
     {

@@ -87,7 +87,7 @@
             <div class="dept-header-row">
                 <div class="dept-price">
                     ${{ number_format($department->rent_fee ?? $department->rentFee) }}
-                    <span class="period">/mo</span>
+                    <span class="period">/day</span>
                 </div>
                 <div class="status-pill-small {{ strtolower($department->status) }}">
                     {{ ucfirst($department->status) }}
