@@ -9,8 +9,6 @@ use App\Http\Resources\RentResource;
 use App\Models\Rent;
 use Illuminate\Http\Request;
 
-use function Symfony\Component\Translation\t;
-
 class RentController extends BaseApiController
 {
     private $relations = ['user', 'department', 'department.user'];
