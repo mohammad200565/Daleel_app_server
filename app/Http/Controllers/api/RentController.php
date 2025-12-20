@@ -5,8 +5,13 @@ namespace App\Http\Controllers\Api;
 use App\Filters\RentFilter;
 use App\Http\Requests\StoreRentRequest;
 use App\Http\Requests\UpdateRentRequest;
+use App\Http\Resources\EditedRentResource;
 use App\Http\Resources\RentResource;
+use App\Models\Department;
+use App\Models\EditedRent;
 use App\Models\Rent;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class RentController extends BaseApiController
@@ -24,19 +29,40 @@ class RentController extends BaseApiController
     public function store(StoreRentRequest $request)
     {
         $data = $request->validated();
-        $overlap = Rent::where('department_id', $data['department_id'])->where('status', 'onRent')
-            ->where(function ($query) use ($data) {
-                $query->where('startRent', '<=', $data['endRent'])
-                    ->where('endRent', '>=', $data['startRent']);
+        $user = request()->user();
+        $start = Carbon::parse($data['startRent'])->startOfDay();
+        $end   = Carbon::parse($data['endRent'])->endOfDay();
+
+        $overlap = Rent::where('department_id', $data['department_id'])
+            ->where('status', 'onRent')
+            ->where(function ($query) use ($start, $end) {
+                $query
+                    ->where('startRent', '<=', $end)
+                    ->where('endRent', '>=', $start);
             })
             ->exists();
         if ($overlap) {
             return $this->errorResponse("This house is rented during this period, please choose another time.", 422);
         }
-        $data['user_id'] = request()->user()->id;
-        $rent = Rent::create($data);
-        $department = $rent->department;
-        $department->increment('rentCounter');
+        $department = Department::findOrFail($data['department_id']);
+        $start = Carbon::parse($data['startRent']);
+        $end = Carbon::parse($data['endRent']);
+        $totalDays = $start->diffInDays($end) + 1;
+        $totalRentFee = $department->rentFee * $totalDays;
+        if (!$user->wallet_balance || $user->wallet_balance < $totalRentFee) {
+            return $this->errorResponse(
+                "Insufficient balance in your wallet to rent this Department.",
+                422
+            );
+        }
+        $data['user_id'] = $user->id;
+        $data['rentFee'] = $totalRentFee;
+
+        $rent = DB::transaction(function () use ($department, $data) {
+            $rent = Rent::create($data);
+            $department->increment('rentCounter');
+            return $rent;
+        });
         $rent->load('department', 'user');
         return $this->successResponse("Rent created successfully", new RentResource($rent),);
     }
@@ -49,10 +75,73 @@ class RentController extends BaseApiController
     public function update(UpdateRentRequest $request, Rent $rent)
     {
         $this->authorize('update', $rent);
-        $rent->update($request->validated());
-        $rent->load('department', 'user');
-        return $this->successResponse("Rent updated successfully", new RentResource($rent));
+        if ($rent->status == 'pending') {
+            $data = $request->validated();
+            $department = $rent->department;
+            $user = $request->user();
+            $start = Carbon::parse($rent->startRent);
+            $end = Carbon::parse($rent->endRent);
+            $totalDays = $start->diffInDays($end) + 1;
+            $totalFee = $department->rentFee * $totalDays;
+            if ($totalFee < $user->wallet_balance) {
+                return $this->errorResponse(
+                    "You don't have enough credit to make the edit.",
+                    422
+                );
+            }
+            $data['rentFee'] = $department->rentFee * $totalDays;
+            $rent->update($data);
+            $rent->load('department', 'user');
+            return $this->successResponse(
+                "Rent updated successfully",
+                new RentResource($rent)
+            );
+        } else if ($rent->status == 'onRent') {
+
+            $data = $request->validated();
+            $department = $rent->department;
+            $user = request()->user();
+            $start = Carbon::parse($rent->startRent);
+            $end = Carbon::parse($rent->endRent);
+            $today = Carbon::today();
+            $totalDays = $start->diffInDays($end) + 1;
+            $totalFee = $department->rentFee * $totalDays;
+
+            if ($today->gt($start) || $today->isSameDay($start)) {
+                return $this->errorResponse(
+                    "You can't edit the contract after it's begining",
+                    422
+                );
+            }
+            if ($totalFee < $user->wallet_balance) {
+                return $this->errorResponse(
+                    "You don't have enough credit to make the edit.",
+                    422
+                );
+            }
+            $data['user_id'] = $user->id;
+            $data['depratment_id'] = $department->id;
+            $data['rent_id'] = $rent->id;
+            $data['status'] = 'onRent';
+            $data['rentFee'] = $totalFee;
+
+            $edited_rent = DB::transaction(function () use ($data) {
+                $rent = EditedRent::create($data);
+                return $rent;
+            });
+
+            return $this->successResponse(
+                "A request is sent for the owner to approve the update.",
+                new EditedRentResource($edited_rent)
+            );
+        } else {
+            return $this->errorResponse(
+                "Only rents with status 'pending' or haven't started yet can be updated.",
+                422
+            );
+        }
     }
+
     public function destroy(Rent $rent)
     {
         $this->authorize('delete', $rent);
