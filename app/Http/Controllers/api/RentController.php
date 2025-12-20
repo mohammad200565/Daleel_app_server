@@ -32,11 +32,15 @@ class RentController extends BaseApiController
     {
         $data = $request->validated();
         $user = request()->user();
+        $start = Carbon::parse($data['startRent'])->startOfDay();
+        $end   = Carbon::parse($data['endRent'])->endOfDay();
+
         $overlap = Rent::where('department_id', $data['department_id'])
             ->where('status', 'onRent')
-            ->where(function ($query) use ($data) {
-                $query->where('startRent', '<=', $data['endRent'])
-                    ->where('endRent', '>=', $data['startRent']);
+            ->where(function ($query) use ($start, $end) {
+                $query
+                    ->where('startRent', '<=', $end)
+                    ->where('endRent', '>=', $start);
             })
             ->exists();
         if ($overlap) {
