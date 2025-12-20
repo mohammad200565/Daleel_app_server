@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'first_name' => 'Mohammad',
             'last_name' => 'Al Homsi',
-            'profileImage' => '/storage/app/public/mohammadAlHomsi.jpg',
+            'profileImage' => '/storage/app/public/mohammadHaboosh.jpg',
             'personIdImage' => 'https://www.pngall.com/wp-content/uploads/5/Admin-Profile-PNG-Image.png',
             'birthdate' => '2005-06-05',
             'verification_state' => 'verified',
