@@ -52,6 +52,20 @@ class DatabaseSeeder extends Seeder
                 'city' => 'Damascus',
             ]
         ]);
+        User::create([
+            'first_name' => 'Yazan',
+            'last_name' => 'Mahfooz',
+            'profileImage' => '/storage/app/public/yazanMahfooz.jpg',
+            'personIdImage' => 'https://www.pngall.com/wp-content/uploads/5/Admin-Profile-PNG-Image.png',
+            'birthdate' => '2005-12-26',
+            'verification_state' => 'verified',
+            'phone' => '0933803688',
+            'email' => 'yazanmahfooz8@admin.com',
+            'password' => Hash::make('password'),
+            'location' => [
+                'city' => 'Damascus',
+            ]
+        ]);
         User::factory(100)->create();
         $this->call(DepartmentSeeder::class);
         for ($i = 0; $i < 500; $i++) {
