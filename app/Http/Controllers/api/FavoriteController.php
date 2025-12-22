@@ -44,7 +44,7 @@ class FavoriteController extends BaseApiController
     }
     public function sendNot()
     {
-        $this->sendNotification('cSCmihlsTL2VYp2wusTWtk:APA91bHr-aGDYD3Pk6P0z3OprqbUxKL1aBOBxREM7NPVXwKEpmzie3Ds3EcbBF9JMt2GVKDcNWtuznGtRz0YrxXyHLF96ax5Qty7X7cSjZI8Bp9eZ01_T98');
+        $this->sendNotification('dUB2KW-CT82B3MgdNW_SUd:APA91bGAbyhqyxNvRvuBGGrA7QEy2eEFeTZL6Yalfn62VR91EGktLXqY2gdkWdCMkwJ_jxbBiAflG7MtPeyGvYd-EWwD57KL8Yj0yyGzcOBxcszTZ7rvurM');
     }
 
     public function sendNotification($token)
