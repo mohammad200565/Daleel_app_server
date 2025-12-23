@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
             'verification_state' => 'verified',
             'phone' => '0935038135',
             'email' => 'mmmmohammadalhomsi@admin.com',
-            'password' => Hash::make('mohammad'),
+            'password' => Hash::make('password'),
             'location' => [
                 'city' => 'Damascus',
             ]
@@ -45,9 +45,9 @@ class DatabaseSeeder extends Seeder
             'personIdImage' => 'https://www.pngall.com/wp-content/uploads/5/Admin-Profile-PNG-Image.png',
             'birthdate' => '2004-07-08',
             'verification_state' => 'verified',
-            'phone' => '0987654321',
+            'phone' => '0943885435',
             'email' => 'mohammadhaboosh@admin.com',
-            'password' => Hash::make('haboosh'),
+            'password' => Hash::make('password'),
             'location' => [
                 'city' => 'Damascus',
             ]
@@ -63,7 +63,106 @@ class DatabaseSeeder extends Seeder
             'email' => 'yazanmahfooz8@admin.com',
             'password' => Hash::make('password'),
             'location' => [
-                'city' => 'Damascus',
+                'city' => 'Damascus'
+            ]
+        ]);
+        User::create([
+            'first_name' => 'Loulia',
+            'last_name' => 'Al Shaar',
+            'profileImage' => '/storage/app/public/louliaAlShaar.jpg',
+            'personIdImage' => 'https://www.pngall.com/wp-content/uploads/5/Admin-Profile-PNG-Image.png',
+            'birthdate' => '2005-1-1',
+            'verification_state' => 'verified',
+            'phone' => '0991744605',
+            'email' => 'louliaalshaar@admin.com',
+            'password' => Hash::make('password'),
+            'location' => [
+                'city' => 'Damascus'
+            ]
+        ]);
+        User::create([
+            'first_name' => 'Zain',
+            'last_name' => 'Nhlawy',
+            'profileImage' => '/storage/app/public/zainNhlawy.jpg',
+            'personIdImage' => 'https://www.pngall.com/wp-content/uploads/5/Admin-Profile-PNG-Image.png',
+            'birthdate' => '2005-1-1',
+            'verification_state' => 'verified',
+            'phone' => '0954179314',
+            'email' => 'zainnhlawy@admin.com',
+            'password' => Hash::make('password'),
+            'location' => [
+                'city' => 'Damascus'
+            ]
+        ]);
+        
+        Department::create( [
+            'headDescription' => 'Homsi Home',
+            'user_id' => 2,
+            'area' => 50,
+            'bedrooms' => 1,
+            'bathrooms' => 1,
+            'rentFee' => 500,
+            'status' => 'furnished',
+            'verification_state' => 'verified',
+            'floor' => 1,
+            'location' => [
+                'city' => 'Damascus'
+            ]
+        ]);
+        Department::create( [
+            'headDescription' => 'Habbosh Home',
+            'user_id' => 3,
+            'area' => 50,
+            'bedrooms' => 1,
+            'bathrooms' => 1,
+            'rentFee' => 500,
+            'status' => 'furnished',
+            'verification_state' => 'verified',
+            'floor' => 1,
+            'location' => [
+                'city' => 'Damascus'
+            ]
+        ]);
+        Department::create( [
+            'headDescription' => 'Yazan Home',
+            'user_id' => 4,
+            'area' => 50,
+            'bedrooms' => 1,
+            'bathrooms' => 1,
+            'rentFee' => 500,
+            'status' => 'furnished',
+            'verification_state' => 'verified',
+            'floor' => 1,
+            'location' => [
+                'city' => 'Damascus'
+            ]
+        ]);
+        Department::create( [
+            'headDescription' => 'Loulia Home',
+            'user_id' => 5,
+            'area' => 50,
+            'bedrooms' => 1,
+            'bathrooms' => 1,
+            'rentFee' => 500,
+            'status' => 'furnished',
+            'verification_state' => 'verified',
+            'floor' => 1,
+            'location' => [
+                'city' => 'Damascus'
+            ]
+        ]);
+        Department::create( [
+            'headDescription' => 'Zain Home',
+            'user_id' => 6,
+            'area' => 50,
+            'bedrooms' => 1,
+            'bathrooms' => 1,
+            'rentFee' => 500,
+            'status' => 'furnished',
+            'verification_state' => 'verified',
+            'floor' => 1,
+            'location' => [
+                'city' => 'Damascus'
             ]
         ]);
         User::factory(100)->create();
