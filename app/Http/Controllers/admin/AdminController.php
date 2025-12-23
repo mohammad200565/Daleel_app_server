@@ -69,7 +69,7 @@ class AdminController extends BaseApiController
         $user->update(['verification_state' => 'verified']);
         $this->sendNotification(
             $user,
-            'Account verificationn',
+            'Account verification',
             'Your account has been verified successfully'
         );
         return redirect()->route('users.show', $user)
@@ -81,7 +81,7 @@ class AdminController extends BaseApiController
         $user->update(['verification_state' => 'rejected']);
         $this->sendNotification(
             $user,
-            'Account verificationn',
+            'Account verification',
             'Your account has been rejected, please contact the support if you believe there something wrong.'
         );
         return redirect()->route('users.show', $user)
@@ -113,7 +113,7 @@ class AdminController extends BaseApiController
         $department->save();
         $this->sendNotification(
             $department->user,
-            'Department verificationn',
+            'Department verification',
             "Your department has been verified successfully, now it's available for renting."
         );
         return redirect('/departments/' . $department->id)
@@ -127,7 +127,7 @@ class AdminController extends BaseApiController
         $department->save();
         $this->sendNotification(
             $department->user,
-            'Department verificationn',
+            'Department verification',
             "Your department has been rejected, please contact the support if you believe there something wrong."
         );
         return redirect('/departments/' . $department->id)
@@ -172,7 +172,7 @@ class AdminController extends BaseApiController
 
         $rents->appends($request->query());
         logger($rents->first());
-        
+
         return view('contracts', compact('rents'));
     }
 
@@ -202,7 +202,7 @@ class AdminController extends BaseApiController
             'Account balance',
             (string)$request->amount . " has been added to your account wallet"
         );
-        
+
         return redirect()->back()->with('success', 'Funds added successfully!');
     }
 
