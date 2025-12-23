@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'first_name' => 'Mohammad',
             'last_name' => 'Al Homsi',
-            'profileImage' => 'app/public/mohammadAlHomsi.jpg',
+            'profileImage' => 'users/profile/mohammadAlHomsi.jpg',
             'birthdate' => '2005-06-05',
             'verification_state' => 'verified',
             'phone' => '0935038135',
@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'first_name' => 'Mohammad',
             'last_name' => 'Haboosh',
-            'profileImage' => 'app/public/mohammadHaboosh.jpg',
+            'profileImage' => 'users/profile/mohammadHaboosh.jpg',
             'birthdate' => '2004-07-08',
             'verification_state' => 'verified',
             'phone' => '0943885435',
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'first_name' => 'Yazan',
             'last_name' => 'Mahfooz',
-            'profileImage' => 'app/public/yazanMahfooz.jpg',
+            'profileImage' => 'users/profile/yazanMahfooz.jpg',
             'birthdate' => '2005-12-26',
             'verification_state' => 'verified',
             'phone' => '0933803688',
@@ -64,7 +64,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'first_name' => 'Loulia',
             'last_name' => 'Al Shaar',
-            'profileImage' => 'app/public/louliaAlShaar.jpg',
+            'profileImage' => 'users/profile/louliaAlShaar.jpg',
             'birthdate' => '2005-1-1',
             'verification_state' => 'verified',
             'phone' => '0991744605',
@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'first_name' => 'Zain',
             'last_name' => 'Nhlawy',
-            'profileImage' => 'app/public/zainNhlawy.jpg',
+            'profileImage' => 'users/profile/zainNhlawy.jpg',
             'birthdate' => '2005-1-1',
             'verification_state' => 'verified',
             'phone' => '0954179314',
@@ -88,77 +88,83 @@ class DatabaseSeeder extends Seeder
             ]
         ]);
 
-        Department::create([
-            'headDescription' => 'Homsi Home',
-            'user_id' => 2,
-            'area' => 50,
-            'bedrooms' => 1,
-            'bathrooms' => 1,
-            'rentFee' => 500,
-            'status' => 'furnished',
-            'verification_state' => 'verified',
-            'floor' => 1,
-            'location' => [
-                'city' => 'Damascus'
-            ]
-        ]);
-        Department::create([
-            'headDescription' => 'Habbosh Home',
-            'user_id' => 3,
-            'area' => 50,
-            'bedrooms' => 1,
-            'bathrooms' => 1,
-            'rentFee' => 500,
-            'status' => 'furnished',
-            'verification_state' => 'verified',
-            'floor' => 1,
-            'location' => [
-                'city' => 'Damascus'
-            ]
-        ]);
-        Department::create([
-            'headDescription' => 'Yazan Home',
-            'user_id' => 4,
-            'area' => 50,
-            'bedrooms' => 1,
-            'bathrooms' => 1,
-            'rentFee' => 500,
-            'status' => 'furnished',
-            'verification_state' => 'verified',
-            'floor' => 1,
-            'location' => [
-                'city' => 'Damascus'
-            ]
-        ]);
-        Department::create([
-            'headDescription' => 'Loulia Home',
-            'user_id' => 5,
-            'area' => 50,
-            'bedrooms' => 1,
-            'bathrooms' => 1,
-            'rentFee' => 500,
-            'status' => 'furnished',
-            'verification_state' => 'verified',
-            'floor' => 1,
-            'location' => [
-                'city' => 'Damascus'
-            ]
-        ]);
-        Department::create([
-            'headDescription' => 'Zain Home',
-            'user_id' => 6,
-            'area' => 50,
-            'bedrooms' => 1,
-            'bathrooms' => 1,
-            'rentFee' => 500,
-            'status' => 'furnished',
-            'verification_state' => 'verified',
-            'floor' => 1,
-            'location' => [
-                'city' => 'Damascus'
-            ]
-        ]);
-        $this->call(DepartmentSeeder::class);
+        $departments = [
+            [
+                'headDescription' => 'Homsi Home',
+                'user_id' => 2,
+                'area' => 50,
+                'bedrooms' => 1,
+                'bathrooms' => 1,
+                'rentFee' => 500,
+                'status' => 'furnished',
+                'verification_state' => 'verified',
+                'floor' => 1,
+                'location' => ['city' => 'Damascus'],
+                'image' => 'departments/Test.jpg',
+            ],
+            [
+                'headDescription' => 'Habbosh Home',
+                'user_id' => 3,
+                'area' => 50,
+                'bedrooms' => 1,
+                'bathrooms' => 1,
+                'rentFee' => 500,
+                'status' => 'furnished',
+                'verification_state' => 'verified',
+                'floor' => 1,
+                'location' => ['city' => 'Damascus'],
+                'image' => 'departments/Test.jpg',
+            ],
+            [
+                'headDescription' => 'Yazan Home',
+                'user_id' => 4,
+                'area' => 50,
+                'bedrooms' => 1,
+                'bathrooms' => 1,
+                'rentFee' => 500,
+                'status' => 'furnished',
+                'verification_state' => 'verified',
+                'floor' => 1,
+                'location' => ['city' => 'Damascus'],
+                'image' => 'departments/Test.jpg',
+            ],
+            [
+                'headDescription' => 'Loulia Home',
+                'user_id' => 5,
+                'area' => 50,
+                'bedrooms' => 1,
+                'bathrooms' => 1,
+                'rentFee' => 500,
+                'status' => 'furnished',
+                'verification_state' => 'verified',
+                'floor' => 1,
+                'location' => ['city' => 'Damascus'],
+                'image' => 'departments/Test.jpg',
+            ],
+            [
+                'headDescription' => 'Zain Home',
+                'user_id' => 6,
+                'area' => 50,
+                'bedrooms' => 1,
+                'bathrooms' => 1,
+                'rentFee' => 500,
+                'status' => 'furnished',
+                'verification_state' => 'verified',
+                'floor' => 1,
+                'location' => ['city' => 'Damascus'],
+                'image' => 'departments/Test.jpg',
+            ],
+        ];
+
+        foreach ($departments as $deptData) {
+            $image = $deptData['image'];
+            unset($deptData['image']);
+            $department = Department::create($deptData);
+            $department->images()->create([
+                'path' => $image,
+            ]);
+        }
+
         for ($i = 0; $i < 500; $i++) {
             User::inRandomOrder()->first()?->favorites()->toggle(Department::inRandomOrder()->first()?->id);
         }
