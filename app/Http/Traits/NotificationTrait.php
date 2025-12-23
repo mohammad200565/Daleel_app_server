@@ -2,72 +2,29 @@
 
 namespace App\Http\Traits;
 
-use Kreait\Firebase\Messaging\Notification;
 use Kreait\Firebase\Messaging\CloudMessage;
+use Kreait\Firebase\Messaging\Notification;
 use Kreait\Laravel\Firebase\Facades\Firebase;
+use Illuminate\Support\Facades\Log;
 
 trait NotificationTrait
 {
-    public function sendNotification($token, $title, $body)
+    public function sendNotification($user, string $title, string $body): void
     {
         $messaging = Firebase::messaging();
-
-        $message = CloudMessage::withTarget('token', $token)
-            ->withNotification(Notification::create(
-                $title,
-                $body
-            ))
+        $tokens = $user->fcmTokens->pluck('token')->toArray();
+        if (empty($tokens))
+            return;
+        $message = CloudMessage::new()
+            ->withNotification(Notification::create($title, $body))
             ->withData([
                 'type' => 'chat',
-                'id' => '123'
+                'id' => '123',
             ]);
-
         try {
-            $messaging->send($message);
+            $report = $messaging->sendMulticast($message, $tokens);
         } catch (\Throwable $e) {
-            logger('Notification failed: ' . $e->getMessage());
+            Log::error("Notification failed for user {$user->id}: " . $e->getMessage());
         }
     }
 }
-
-// <?php
-
-// namespace App\Http\Traits;
-
-// use Kreait\Firebase\Messaging\Notification;
-// use Kreait\Firebase\Messaging\CloudMessage;
-// use Kreait\Laravel\Firebase\Facades\Firebase;
-
-// trait NotificationTrait
-// {
-//     public function sendNotification($token, $title, $body, $url = null)
-//     {
-//         $messaging = Firebase::messaging();
-//         $notification = Notification::create($title, $body);
-//         $message = CloudMessage::withTarget('token', $token)
-//             ->withNotification($notification)
-//             ->withData([
-//                 'type' => 'chat',
-//                 'id' => '123',
-//             ]);
-//         $androidConfig = [
-//             'sound' => 'notification_sound.mp3', 
-//         ];
-//         $apnsConfig = [
-//             'payload' => [
-//                 'aps' => [
-//                     'url' => $url,  
-//                 ],
-//             ],
-//         ];
-//         $message = $message
-//             ->withAndroidConfig($androidConfig) 
-//             ->withApnsConfig($apnsConfig);      
-
-//         try {
-//             $messaging->send($message);
-//         } catch (\Throwable $e) {
-//             logger('Notification failed: ' . $e->getMessage());
-//         }
-//     }
-// }
