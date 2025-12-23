@@ -17,7 +17,7 @@ class DepartmentController extends BaseApiController
     {
         $filters = new DepartmentFilter($request);
         $query = Department::query();
-        $departments = $this->loadRelations($request, $query, $this->relations)
+        $departments = $this->loadRelations($request, $query, $this->relations)->where('verification_state', 'verified')
             ->filter($filters)
             ->paginate(20);
         return $this->successResponse('Departments retrieved successfully', DepartmentResource::collection($departments));
