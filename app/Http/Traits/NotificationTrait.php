@@ -6,6 +6,7 @@ use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use Kreait\Laravel\Firebase\Facades\Firebase;
 use Illuminate\Support\Facades\Log;
+use Kreait\Firebase\Messaging\AndroidConfig;
 
 trait NotificationTrait
 {
@@ -16,7 +17,11 @@ trait NotificationTrait
         if (empty($tokens))
             return;
         $message = CloudMessage::new()
-            ->withNotification(Notification::create($title, $body))
+            ->withNotification(Notification::create($title, $body))->withAndroidConfig(AndroidConfig::fromArray([
+                'notification' => [
+                    'sound' => 'default',
+                ],
+            ]))
             ->withData([
                 'type' => 'chat',
                 'id' => '123',
