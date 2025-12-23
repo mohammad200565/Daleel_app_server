@@ -88,6 +88,7 @@ class AuthController extends BaseApiController
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
+        $request->user()->fcmTokens()->delete();
         return $this->successResponse("Logged out successfully");
     }
 
