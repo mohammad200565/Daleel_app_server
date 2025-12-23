@@ -67,13 +67,11 @@ class AdminController extends BaseApiController
     public function verifyUser(User $user)
     {
         $user->update(['verification_state' => 'verified']);
-        foreach ($user->fcmTokens as $token){
-            $this->sendNotification(
-                $token,
-                'Account verificationn',
-                'Your account has been verified successfully'
-            );
-        }
+        $this->sendNotification(
+            $user,
+            'Account verificationn',
+            'Your account has been verified successfully'
+        );
         return redirect()->route('users.show', $user)
             ->with('success', 'User has been verified successfully!');
     }
@@ -81,13 +79,11 @@ class AdminController extends BaseApiController
     public function rejectUser(User $user)
     {
         $user->update(['verification_state' => 'rejected']);
-        foreach ($user->fcmTokens as $token){
-            $this->sendNotification(
-                $token,
-                'Account verificationn',
-                'Your account has been rejected, please contact the support if you believe there something wrong.'
-            );
-        }
+        $this->sendNotification(
+            $user,
+            'Account verificationn',
+            'Your account has been rejected, please contact the support if you believe there something wrong.'
+        );
         return redirect()->route('users.show', $user)
             ->with('success', 'User verification has been rejected!');
     }
@@ -115,13 +111,11 @@ class AdminController extends BaseApiController
 
         $department->verification_state = 'verified';
         $department->save();
-        foreach ($department->user->fcmTokens as $token){
-            $this->sendNotification(
-                $token,
-                'Department verificationn',
-                "Your department has been verified successfully, now it's available for renting."
-            );
-        }
+        $this->sendNotification(
+            $department->user,
+            'Department verificationn',
+            "Your department has been verified successfully, now it's available for renting."
+        );
         return redirect('/departments/' . $department->id)
             ->with('success', 'Department has been verified successfully!');
     }
@@ -131,13 +125,11 @@ class AdminController extends BaseApiController
 
         $department->verification_state = 'rejected';
         $department->save();
-        foreach ($department->user->fcmTokens as $token){
-            $this->sendNotification(
-                $token,
-                'Department verificationn',
-                "Your department has been rejected, please contact the support if you believe there something wrong."
-            );
-        }
+        $this->sendNotification(
+            $department->user,
+            'Department verificationn',
+            "Your department has been rejected, please contact the support if you believe there something wrong."
+        );
         return redirect('/departments/' . $department->id)
             ->with('success', 'Department verification has been rejected!');
     }
@@ -205,14 +197,12 @@ class AdminController extends BaseApiController
 
         $user->increment('wallet_balance', $request->amount);
 
-        foreach ($user->fcmTokens as $token){
-            $this->sendNotification(
-                $token,
-                'Account balance',
-                (string)$request->amount . " has been added to your account wallet"
-            );
-        }
-
+        $this->sendNotification(
+            $user,
+            'Account balance',
+            (string)$request->amount . " has been added to your account wallet"
+        );
+        
         return redirect()->back()->with('success', 'Funds added successfully!');
     }
 

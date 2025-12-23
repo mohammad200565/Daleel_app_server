@@ -123,6 +123,7 @@ class RentController extends BaseApiController
         else if ($rent->status == 'onRent') {
             $data = $request->validated();
             $department = $rent->department;
+            $owner = $department->user;
             $user = request()->user();
             $start = Carbon::parse($data['startRent']);
             $end = Carbon::parse($data['endRent']);
@@ -154,6 +155,12 @@ class RentController extends BaseApiController
                 $edited_rent = EditedRent::create($data);
                 return $edited_rent;
             });
+
+            $this->sendNotification(
+                $owner,
+                'Rent update verification',
+                "The tenant requested to update the rent terms, please read the new terms and approve or reject the tenant request."
+            );
             
             return $this->successResponse(
                 "A request is sent for the owner to approve the update.",
@@ -177,7 +184,7 @@ class RentController extends BaseApiController
     {
         $this->authorize('cancelRent', $rent);
         if ($rent->status !== 'onRent' && $rent->status !== 'pending') {
-            return $this->errorResponse("Only rents with status 'onRent pending' can be cancelled.", 422);
+            return $this->errorResponse("Only rents with status 'onRent, pending' can be cancelled.", 422);
         }
         $rent->status = 'cancelled';
         $department = $rent->department;
@@ -227,6 +234,12 @@ class RentController extends BaseApiController
             $rent->save();
         });
 
+        $this->sendNotification(
+            $user,
+            'Rent request status.',
+            "The owner approved your request to rent the appartment."
+        );
+
         $rent->load('department', 'user');
         return $this->successResponse(
             "Rent approved successfully",
@@ -241,9 +254,15 @@ class RentController extends BaseApiController
         }
         $rent->status = 'cancelled';
         $department = $rent->department;
+        $user = $rent->user;
         $department->isAvailable = true;
         $department->save();
         $rent->save();
+        $this->sendNotification(
+            $user,
+            'Rent request status.',
+            "The owner rejected your request to rent the appartment."
+        );
         $rent->load('department', 'user');
         return $this->successResponse("Rent rejected successfully", new RentResource($rent));
     }
