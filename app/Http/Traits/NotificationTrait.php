@@ -8,6 +8,7 @@ use Kreait\Laravel\Firebase\Facades\Firebase;
 use Illuminate\Support\Facades\Log;
 use Kreait\Firebase\Messaging\AndroidConfig;
 
+
 trait NotificationTrait
 {
     public function sendNotification($user, string $title, string $body): void
