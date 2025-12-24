@@ -91,7 +91,7 @@ class RentController extends BaseApiController
 
     public function show(Request $request, Rent $rent)
     {
-        // $this->authorize('view', $rent);
+        $this->authorize('view', $rent);
         $this->loadRelations($request, $rent, $this->relations);
         return $this->successResponse("Rent fetched successfully", new RentResource($rent));
     }
