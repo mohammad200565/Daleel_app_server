@@ -189,11 +189,22 @@ class RentController extends BaseApiController
         if ($rent->status !== 'onRent' && $rent->status !== 'pending') {
             return $this->errorResponse("Only rents with status 'onRent, pending' can be cancelled.", 422);
         }
+
+        $tenant = $rent->user;
+
+        $start = Carbon::parse($rent->startRent);
+        $today = Carbon::today();
+        $until_start = $today->diffInDays($start, true);
+        $loss_value = $rent->rentFee * (min(1, 2/exp((1/3) * ($until_start - 1))));
+
+        $tenant->wallet_balance += $rent->rentFee - $loss_value;
+
         $rent->status = 'cancelled';
         $department = $rent->department;
         $department->isAvailable = true;
         $department->save();
         $rent->save();
+        $tenant->save();
         $rent->load('department', 'user');
         return $this->successResponse("Rent cancelled successfully", new RentResource($rent));
     }
