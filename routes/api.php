@@ -19,7 +19,6 @@ Route::prefix('v1')->group(function () {
         Route::post('login', [AuthController::class, 'login']);
     });
 
-
     Route::middleware('auth:sanctum')->prefix('auth')->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
     });
@@ -30,17 +29,14 @@ Route::prefix('v1')->group(function () {
         Route::apiResource('departments.reviews', ReviewController::class)->scoped();
         Route::apiResource('departments.comments', CommentController::class)->scoped();
 
-
         Route::post('departments/{department}/favorite/toggle', [FavoriteController::class, 'toggle']);
         Route::get('favorites/me', [FavoriteController::class, 'userFavorites']);
         Route::get('favorites/{department}', [FavoriteController::class, 'isFavorite']);
-
 
         Route::apiResource('rents', RentController::class);
         Route::post('rents/{rent}/approve', [RentController::class, 'approveRent']);
         Route::post('rents/{rent}/reject', [RentController::class, 'rejectRent']);
         Route::post('rents/{rent}/cancel', [RentController::class, 'cancelRent']);
-
 
         Route::prefix('edited-rents')->group(function () {
             Route::get('/', [EditedRentController::class, 'index']);
