@@ -29,4 +29,32 @@ trait NotificationTrait
             Log::error("Notification failed for user {$user->id}: " . $e->getMessage());
         }
     }
+    public function sendRateDepartmentNotification($user, int $rentId): void
+    {
+        $messaging = Firebase::messaging();
+        $tokens = $user->fcmTokens->pluck('token')->toArray();
+        if (empty($tokens)) return;
+
+        $message = CloudMessage::new()
+            ->withNotification(Notification::create(
+                'Rate Your Apartment',
+                'Tell us about your experience ⭐'
+            ))->withData([
+                'type' => 'rate_department',
+                'rent_id' => (string) $rentId,
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+
+            ])->withAndroidConfig(AndroidConfig::fromArray([
+                'priority' => 'high',
+                'notification' => [
+                    'sound' => 'default',
+                    'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+                ],
+            ]));
+        try {
+            $report = $messaging->sendMulticast($message, $tokens);
+        } catch (\Throwable $e) {
+            Log::error("Notification failed for user {$user->id}: " . $e->getMessage());
+        }
+    }
 }

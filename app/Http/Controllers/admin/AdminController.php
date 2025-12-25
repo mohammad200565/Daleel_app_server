@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\BaseApiController;
 use App\Models\Department;
 use App\Models\Rent;
 use App\Models\User;
-use Carbon\Traits\ToStringFormat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -79,11 +78,12 @@ class AdminController extends BaseApiController
     public function rejectUser(User $user)
     {
         $user->update(['verification_state' => 'rejected']);
-        $this->sendNotification(
-            $user,
-            'Account verification',
-            'Your account has been rejected, please contact the support if you believe there something wrong.'
-        );
+        $this->sendRateDepartmentNotification($user, 11);
+        // $this->sendNotification(
+        //     $user,
+        //     'Account verification',
+        //     'Your account has been rejected, please contact the support if you believe there something wrong.'
+        // );
         return redirect()->route('users.show', $user)
             ->with('success', 'User verification has been rejected!');
     }
