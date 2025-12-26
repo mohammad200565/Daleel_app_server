@@ -86,7 +86,7 @@ class RentController extends BaseApiController
 
     public function show(Request $request, Rent $rent)
     {
-        // $this->authorize('view', $rent);
+        $this->authorize('view', $rent);
         $this->loadRelations($request, $rent, $this->relations);
         return $this->successResponse("Rent fetched successfully", new RentResource($rent));
     }
@@ -153,11 +153,11 @@ class RentController extends BaseApiController
                 return $edited_rent;
             });
 
-            $this->sendNotification(
-                $owner,
-                'Rent update verification',
-                "The tenant requested to update the rent terms, please read the new terms and approve or reject the tenant request."
-            );
+            // $this->sendNotification(
+            //     $owner,
+            //     'Rent update verification',
+            //     "The tenant requested to update the rent terms, please read the new terms and approve or reject the tenant request."
+            // );
 
             return $this->successResponse(
                 "A request is sent for the owner to approve the update.",
@@ -183,11 +183,22 @@ class RentController extends BaseApiController
         if ($rent->status !== 'onRent' && $rent->status !== 'pending') {
             return $this->errorResponse("Only rents with status 'onRent, pending' can be cancelled.", 422);
         }
+
+        $tenant = $rent->user;
+
+        $start = Carbon::parse($rent->startRent);
+        $today = Carbon::today();
+        $until_start = $today->diffInDays($start, true);
+        $loss_value = $rent->rentFee * (min(1, 2/exp((1/3) * ($until_start - 1))));
+
+        $tenant->wallet_balance += $rent->rentFee - $loss_value;
+
         $rent->status = 'cancelled';
         $department = $rent->department;
         $department->isAvailable = true;
         $department->save();
         $rent->save();
+        $tenant->save();
         $rent->load('department', 'user');
         return $this->successResponse("Rent cancelled successfully", new RentResource($rent));
     }

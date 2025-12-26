@@ -12,12 +12,20 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class)->constrained()->onDelete('cascade');
-            $table->foreignIdFor(Department::class)->constrained()->onDelete('cascade');
-            $table->integer('rating');
+
+            $table->foreignIdFor(User::class)
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->foreignIdFor(Department::class)
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->tinyInteger('rating');
             $table->timestamps();
         });
     }
+
     public function down(): void
     {
         Schema::dropIfExists('reviews');

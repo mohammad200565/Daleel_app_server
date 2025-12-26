@@ -37,6 +37,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/rents/{rent}/cancel', [RentController::class, 'cancelRent']);
 
         Route::prefix('edited_rent')->group(function () {
+            Route::get('/', [EditedRentController::class, 'index']);
             Route::get('{edited_rent}', [EditedRentController::class, 'show']);
             Route::post('{edited_rent}/approve', [EditedRentController::class, 'approve']);
             Route::post('{edited_rent}/reject', [EditedRentController::class, 'reject']);
