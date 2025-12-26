@@ -33,7 +33,6 @@ Route::prefix('v1')->group(function () {
 
         Route::apiResource('rents', RentController::class);
         Route::post('/rents/history', [RentController::class, 'indexHistory']);
-        Route::post('/rents/contract', [RentController::class, 'indexContract']);
         Route::post('/rents/{rent}/approve', [RentController::class, 'approveRent']);
         Route::post('/rents/{rent}/reject', [RentController::class, 'rejectRent']);
         Route::post('/rents/{rent}/cancel', [RentController::class, 'cancelRent']);

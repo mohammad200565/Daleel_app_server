@@ -25,7 +25,7 @@ class RentController extends BaseApiController
             ->where('user_id', $user->id)
             ->orWhereHas('department', function ($q) use ($user) {
                 $q->where('user_id', $user->id);
-            });
+            })->whereIn('status', ['pending', 'onRent']);
         $rents = $this->loadRelations($request, $query, $this->relations)
             ->filter($filters)->paginate(15);
         return $this->successResponse("Rents fetched successfully", RentResource::collection($rents),);
@@ -43,19 +43,7 @@ class RentController extends BaseApiController
             ->filter($filters)->paginate(15);
         return $this->successResponse("Rents fetched successfully", RentResource::collection($rents),);
     }
-    public function indexContract(Request $request)
-    {
-        $filters = new RentFilter($request);
-        $user = request()->user();
-        $query = Rent::query()
-            ->where('user_id', $user->id)
-            ->orWhereHas('department', function ($q) use ($user) {
-                $q->where('user_id', $user->id);
-            })->whereIn('status', ['pending', 'onRent']);
-        $rents = $this->loadRelations($request, $query, $this->relations)
-            ->filter($filters)->paginate(15);
-        return $this->successResponse("Rents fetched successfully", RentResource::collection($rents),);
-    }
+
     public function store(StoreRentRequest $request)
     {
         $data = $request->validated();
