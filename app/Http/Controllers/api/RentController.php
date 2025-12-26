@@ -30,7 +30,19 @@ class RentController extends BaseApiController
             ->filter($filters)->paginate(15);
         return $this->successResponse("Rents fetched successfully", RentResource::collection($rents),);
     }
-
+    public function indexHistory(Request $request)
+    {
+        $filters = new RentFilter($request);
+        $user = request()->user();
+        $query = Rent::query()
+            ->where('user_id', $user->id)
+            ->orWhereHas('department', function ($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->whereIn('status', ['completed', 'cancelled']);
+        $rents = $this->loadRelations($request, $query, $this->relations)
+            ->filter($filters)->paginate(15);
+        return $this->successResponse("Rents fetched successfully", RentResource::collection($rents),);
+    }
 
     public function store(StoreRentRequest $request)
     {
@@ -195,7 +207,7 @@ class RentController extends BaseApiController
         $start = Carbon::parse($rent->startRent);
         $today = Carbon::today();
         $until_start = $today->diffInDays($start, true);
-        $loss_value = $rent->rentFee * (min(1, 2/exp((1/3) * ($until_start - 1))));
+        $loss_value = $rent->rentFee * (min(1, 2 / exp((1 / 3) * ($until_start - 1))));
 
         $tenant->wallet_balance += $rent->rentFee - $loss_value;
 
