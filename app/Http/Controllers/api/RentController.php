@@ -22,10 +22,13 @@ class RentController extends BaseApiController
         $filters = new RentFilter($request);
         $user = request()->user();
         $query = Rent::query()
-            ->where('user_id', $user->id)
-            ->orWhereHas('department', function ($q) use ($user) {
-                $q->where('user_id', $user->id);
-            })->whereIn('status', ['pending', 'onRent']);
+            ->where(function ($q) use ($user) {
+                $q->where('user_id', $user->id)
+                    ->orWhereHas('department', function ($q2) use ($user) {
+                        $q2->where('user_id', $user->id);
+                    });
+            })
+            ->whereIn('status', ['pending', 'onRent']);
         $rents = $this->loadRelations($request, $query, $this->relations)
             ->filter($filters)->paginate(15);
         return $this->successResponse("Rents fetched successfully", RentResource::collection($rents),);
@@ -35,9 +38,11 @@ class RentController extends BaseApiController
         $filters = new RentFilter($request);
         $user = request()->user();
         $query = Rent::query()
-            ->where('user_id', $user->id)
-            ->orWhereHas('department', function ($q) use ($user) {
-                $q->where('user_id', $user->id);
+            ->where(function ($q) use ($user) {
+                $q->where('user_id', $user->id)
+                    ->orWhereHas('department', function ($q2) use ($user) {
+                        $q2->where('user_id', $user->id);
+                    });
             })->whereIn('status', ['completed', 'cancelled']);
         $rents = $this->loadRelations($request, $query, $this->relations)
             ->filter($filters)->paginate(15);
