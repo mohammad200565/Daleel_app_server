@@ -2,6 +2,7 @@
 
 namespace App\Http\Traits;
 
+use App\Models\Notification as ModelsNotification;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use Kreait\Laravel\Firebase\Facades\Firebase;
@@ -24,6 +25,12 @@ trait NotificationTrait
                     'sound' => 'default',
                 ],
             ]));
+        ModelsNotification::create([
+            'user_id' => $user->id,
+            'title' => $title,
+            'description' => $body,
+            'sent_at' => now(),
+        ]);
         try {
             $report = $messaging->sendMulticast($message, $tokens);
         } catch (\Throwable $e) {
@@ -35,11 +42,12 @@ trait NotificationTrait
         $messaging = Firebase::messaging();
         $tokens = $user->fcmTokens->pluck('token')->toArray();
         if (empty($tokens)) return;
-
+        $title = 'Rate Your Apartment';
+        $body = 'Tell us about your experience ⭐';
         $message = CloudMessage::new()
             ->withNotification(Notification::create(
-                'Rate Your Apartment',
-                'Tell us about your experience ⭐'
+                $title,
+                $body
             ))->withData([
                 'type' => 'rate_department',
                 'rent_id' => (string) $rentId,
@@ -51,6 +59,12 @@ trait NotificationTrait
                     'sound' => 'default',
                 ],
             ]));
+        ModelsNotification::create([
+            'user_id' => $user->id,
+            'title' => $title,
+            'description' => $body,
+            'sent_at' => now(),
+        ]);
         try {
             $report = $messaging->sendMulticast($message, $tokens);
         } catch (\Throwable $e) {
