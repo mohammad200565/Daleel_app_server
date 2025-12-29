@@ -15,18 +15,14 @@
 <x-layout title="Contract #{{ $rent->id }} Details">
 
     <style>
-        /* 
-           PAGE STYLES
-           Using global theme variables for Dark Mode compatibility
-        */
-
+       
         .contract-detail-container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 40px;
         }
 
-        /* --- Back Button --- */
+      
         .btn-back {
             display: inline-flex;
             align-items: center;
@@ -41,7 +37,7 @@
 
         .btn-back:hover { color: var(--primary); }
 
-        /* --- Main Card --- */
+       
         .contract-detail-card {
             background-color: var(--bg-card);
             border-radius: var(--radius-xl);
@@ -50,7 +46,7 @@
             border: 1px solid var(--border-color);
         }
 
-        /* --- Header --- */
+    
         .contract-header {
             display: flex;
             justify-content: space-between;
@@ -74,7 +70,7 @@
             margin-top: 5px;
         }
 
-        /* --- Status Badge --- */
+    
         .status-badge-lg {
             padding: 8px 20px;
             border-radius: var(--radius-pill);
@@ -84,19 +80,19 @@
             letter-spacing: 0.5px;
         }
 
-        /* Status Colors - using rgba for adaptive background */
+      
         .st-onRent { background: rgba(21, 101, 192, 0.15); color: #1565c0; }
         .st-pending { background: rgba(245, 127, 23, 0.15); color: #f57f17; }
         .st-completed { background: rgba(46, 125, 50, 0.15); color: #2e7d32; }
         .st-cancelled { background: rgba(198, 40, 40, 0.15); color: #c62828; }
 
-        /* Dark Mode Text Adjustments */
+     
         :root.dark .st-onRent { color: #64b5f6; }
         :root.dark .st-pending { color: #ffb74d; }
         :root.dark .st-completed { color: #81c784; }
         :root.dark .st-cancelled { color: #e57373; }
 
-        /* --- Parties Section (Tenant -> Owner) --- */
+      
         .parties-section {
             display: flex;
             align-items: center;
@@ -145,8 +141,7 @@
             padding: 0 40px;
             opacity: 0.5;
         }
-
-        /* --- Section Titles --- */
+    
         .section-title {
             font-size: 18px;
             font-weight: 800;
@@ -164,8 +159,7 @@
             background: var(--gold);
             border-radius: 2px;
         }
-
-        /* --- Terms Grid --- */
+     
         .terms-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -195,18 +189,17 @@
             color: var(--text-main);
         }
 
-        /* Value Colors */
         .val-money { color: var(--primary); }
         .val-good { color: #2e7d32; }
         .val-warn { color: #f57f17; }
         .val-bad { color: #c62828; }
 
-        /* Dark mode brightness adjustments for status text */
+       
         :root.dark .val-good { color: #81c784; }
         :root.dark .val-warn { color: #ffb74d; }
         :root.dark .val-bad { color: #e57373; }
 
-        /* --- Timeline --- */
+       
         .timeline-container {
             background: var(--bg-body);
             padding: 30px;
@@ -226,7 +219,7 @@
 
         .progress-track {
             height: 10px;
-            background: var(--border-color); /* Adaptive track color */
+            background: var(--border-color); 
             border-radius: 5px;
             overflow: hidden;
             margin-bottom: 12px;
@@ -246,20 +239,18 @@
             color: var(--text-main);
         }
 
-        /* --- Property Details --- */
+      
         .property-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            background: var(--bg-body); /* Adaptive background */
+            background: var(--bg-body); 
             padding: 25px;
             border-radius: var(--radius-md);
             border: 1px solid rgba(200, 168, 122, 0.2);
         }
         
-        /* Optional: specific tint for light mode if you really want it, 
-           but generally keeping it neutral is safer for mixed modes. 
-           This adds a very subtle tint visible in both modes. */
+     
         .property-grid {
              background: linear-gradient(0deg, rgba(200, 168, 122, 0.03), rgba(200, 168, 122, 0.03)), var(--bg-body);
         }
@@ -271,7 +262,7 @@
         .prop-label { font-size: 12px; color: var(--text-sub); font-weight: 600; }
         .prop-val { font-size: 15px; font-weight: 700; color: var(--text-main); }
 
-        /* --- Footer Meta --- */
+     
         .contract-footer {
             margin-top: 40px;
             padding-top: 20px;
@@ -290,14 +281,14 @@
 
     <div class="contract-detail-container">
         
-        <!-- Back Link -->
+       
         <a href="{{ route('contracts.index') }}" class="btn-back">
             ← Back to Contracts
         </a>
 
         <div class="contract-detail-card">
             
-            <!-- Header -->
+          
             <div class="contract-header">
                 <div>
                     <h1 class="contract-title">Contract #{{ $rent->id }}</h1>
@@ -309,9 +300,9 @@
                 </div>
             </div>
 
-            <!-- Parties (Tenant -> Owner) -->
+       
             <div class="parties-section">
-                <!-- Tenant -->
+              
                 <div class="party-card">
                     <div class="party-role">Tenant</div>
                     <a href="{{ route('users.show', $rent->user) }}" class="party-name">
@@ -322,10 +313,10 @@
                     </div>
                 </div>
 
-                <!-- Divider -->
+               
                 <div class="contract-arrow">➜</div>
 
-                <!-- Owner -->
+                
                 <div class="party-card">
                     <div class="party-role">Department Owner</div>
                     <a href="{{ route('users.show', $rent->department->user) }}" class="party-name">
@@ -337,7 +328,7 @@
                 </div>
             </div>
 
-            <!-- Financial & Date Terms -->
+         
             <div class="section-title">Terms & Conditions</div>
             <div class="terms-grid">
                 
@@ -369,7 +360,7 @@
                 </div>
             </div>
 
-            <!-- Timeline -->
+          
             @if($rent->status === 'onRent' || $rent->status === 'pending')
                 <div class="section-title">Timeline Progress</div>
                 <div class="timeline-container">
@@ -395,7 +386,7 @@
                 </div>
             @endif
 
-            <!-- Property Details Summary -->
+          
             <div class="section-title">Department Information</div>
             <div class="property-grid">
                 <div class="prop-item">
@@ -423,7 +414,7 @@
                 </div>
             </div>
 
-            <!-- Footer Meta -->
+           
             <div class="contract-footer">
                 <div>Created: {{ $rent->created_at->format('M d, Y H:i') }}</div>
                 <div>Last Updated: {{ $rent->updated_at->format('M d, Y H:i') }}</div>

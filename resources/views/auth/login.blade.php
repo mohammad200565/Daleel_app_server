@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Daleel Admin</title>
 
-    <!-- Premium Font -->
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <script>
-        // Check for saved theme preference immediately to prevent flash
+        
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
@@ -21,7 +21,7 @@
 
     <style>
         :root {
-            /* --- LIGHT THEME VARIABLES --- */
+            
             --primary: #5d4037;
             --primary-grad: linear-gradient(135deg, #5d4037 0%, #8d6e63 100%);
             --gold: #c8a87a;
@@ -37,7 +37,7 @@
             --btn-text: #ffffff;
         }
 
-        /* --- DARK THEME VARIABLES --- */
+       
         :root.dark {
             --bg-body: #0f172a;
             --bg-card: rgba(30, 41, 59, 0.6);
@@ -46,7 +46,7 @@
             --border-color: #334155;
             --input-bg: rgba(15, 23, 42, 0.4);
             
-            /* Gold becomes primary in dark mode for visibility */
+           
             --primary: #c8a87a; 
             --primary-grad: linear-gradient(135deg, #c8a87a 0%, #a88b5d 100%);
             --shadow-card: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
@@ -68,7 +68,7 @@
             transition: background-color 0.5s ease, color 0.5s ease;
         }
 
-        /* --- BACKGROUND ANIMATION --- */
+        
         .background-blobs {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -79,7 +79,7 @@
         .blob {
             position: absolute;
             border-radius: 50%;
-            filter: blur(60px); /* Sharper blur for more visibility */
+            filter: blur(60px); 
             opacity: 0.7;
             animation: moveOrb 8s infinite alternate ease-in-out;
         }
@@ -102,7 +102,7 @@
             100% { transform: translate(50px, 80px) scale(1.1); }
         }
 
-        /* --- TOGGLE BUTTON --- */
+        
         .theme-toggle-wrapper {
             position: absolute;
             top: 20px;
@@ -133,7 +133,7 @@
             color: var(--gold);
         }
 
-        /* --- LOGIN CARD --- */
+       
         .login-container {
             width: 100%;
             max-width: 420px;
@@ -146,16 +146,13 @@
             box-shadow: var(--shadow-card);
             position: relative;
             z-index: 10;
-            
-            /* Continuous Floating Animation */
             animation: floatCard 6s ease-in-out infinite;
         }
 
-        /* Entrance Animation handled by JS/CSS class usually, but pure CSS here: */
         .login-container {
             animation: 
                 entranceCard 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards,
-                floatCard 6s ease-in-out 1s infinite; /* Wait 1s then float */
+                floatCard 6s ease-in-out 1s infinite; 
         }
 
         @keyframes entranceCard {
@@ -168,7 +165,7 @@
             50% { transform: translateY(-15px); }
         }
 
-        /* --- HEADER --- */
+        
         .login-header {
             text-align: center;
             margin-bottom: 32px;
@@ -198,7 +195,7 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* --- FORM --- */
+      
         .form-group {
             margin-bottom: 24px;
             position: relative;
@@ -237,7 +234,7 @@
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        /* Pop animation on focus */
+       
         .form-input:focus {
             outline: none;
             border-color: var(--gold);
@@ -248,7 +245,7 @@
         
         .form-input:focus + .form-label { color: var(--gold); }
 
-        /* --- BUTTON --- */
+      
         .login-btn {
             width: 100%;
             background: var(--primary-grad);
@@ -267,7 +264,6 @@
             overflow: hidden;
         }
 
-        /* Button Shine Effect */
         .login-btn::before {
             content: '';
             position: absolute;
@@ -289,7 +285,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- FOOTER & ERROR --- */
+        
         .error-message {
             background-color: rgba(239, 68, 68, 0.1);
             border: 1px solid rgba(239, 68, 68, 0.3);
@@ -320,7 +316,7 @@
         
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* Icon visibility logic */
+        
         .icon-sun { display: none; }
         .icon-moon { display: block; }
         
@@ -331,7 +327,7 @@
 </head>
 <body>
 
-    <!-- Theme Toggle Button -->
+    
     <div class="theme-toggle-wrapper">
         <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Dark/Light Mode">
             <span class="icon-sun">☀️</span>
@@ -339,7 +335,7 @@
         </button>
     </div>
 
-    <!-- Animated Background Elements -->
+   
     <div class="background-blobs">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
@@ -357,7 +353,7 @@
             </div>
         </div>
 
-        <!-- Error Message -->
+        
         @if($errors->any())
             <div class="error-message">
                 {{ $errors->first() }}
@@ -367,7 +363,7 @@
         <form action="/login" method="POST">
             @csrf
 
-            <!-- Email Input -->
+            
             <div class="form-group">
                 <input 
                     id="email" 
@@ -378,12 +374,9 @@
                     placeholder="name@example.com"
                     value="{{ old('email') }}"
                 >
-                <!-- Label moved after input for CSS selector focus trick -->
-                <!-- Note: In real layout, you might need flex-reverse or absolute positioning if you want label on top visually but below in DOM. 
-                     Here I kept simple order but removed the sibling selector styling to keep it robust. -->
             </div>
 
-            <!-- Password Input -->
+            
             <div class="form-group">
                 <input 
                     id="password"
@@ -395,7 +388,7 @@
                 >
             </div>
 
-            <!-- Submit Button -->
+           
             <button type="submit" class="login-btn">
                 Sign In
             </button>

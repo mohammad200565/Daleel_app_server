@@ -8,12 +8,10 @@
     $endDate   = Carbon::parse($rent->end_rent ?? $rent->endRent);
     $amount    = $rent->rentFee;
     
-    // Default Values
     $dateLabel = 'End Date';
     $dateValue = $endDate->format('M d, Y');
     $statusMsg = ['label' => 'Status', 'value' => 'Unknown', 'class' => ''];
 
-    // Dynamic Logic
     switch ($rent->status) {
         case 'onRent':
             $daysRemaining = round($today->diffInDays($endDate, false));
@@ -36,7 +34,6 @@
             break;
 
         case 'cancelled':
-            // SHOW CANCELLED DATE INSTEAD OF END DATE
             $dateLabel = 'Cancelled On';
             $dateValue = $rent->updated_at->format('M d, Y'); 
             
@@ -72,7 +69,6 @@
             box-shadow: 0 12px 24px rgba(0,0,0,0.08);
         }
 
-        /* Header */
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
         .contract-id { font-family: monospace; font-weight: 700; color: var(--text-main); font-size: 16px; }
         .contract-label { font-size: 10px; text-transform: uppercase; color: var(--text-sub); display: block; }
@@ -85,13 +81,11 @@
         .st-completed { background: rgba(46, 125, 50, 0.1); color: #2e7d32; }
         .st-cancelled { background: rgba(198, 40, 40, 0.1); color: #c62828; }
         
-        /* Dark Mode Badge Fixes */
         :root.dark .st-onRent { background: rgba(21, 101, 192, 0.2); color: #90caf9; }
         :root.dark .st-pending { background: rgba(239, 108, 0, 0.2); color: #ffcc80; }
         :root.dark .st-completed { background: rgba(46, 125, 50, 0.2); color: #a5d6a7; }
         :root.dark .st-cancelled { background: rgba(198, 40, 40, 0.2); color: #ef9a9a; }
 
-        /* Connection Visual */
         .parties-visual {
             display: flex; align-items: center; justify-content: space-between;
             background: var(--bg-body); padding: 12px; border-radius: 12px;
@@ -106,7 +100,6 @@
         .party-role { display: block; font-size: 9px; color: var(--text-sub); text-transform: uppercase; }
         .connection-icon { color: var(--gold); font-size: 14px; background: var(--bg-body); padding: 0 4px; position: relative; z-index: 1;}
 
-        /* Data Grid (2x2) */
         .info-grid {
             display: grid; grid-template-columns: 1fr 1fr; gap: 12px 16px;
             border-top: 1px solid var(--border-color); padding-top: 16px;
@@ -115,7 +108,6 @@
         .label { font-size: 10px; text-transform: uppercase; color: var(--text-sub); font-weight: 600; margin-bottom: 2px; }
         .value { font-size: 13px; font-weight: 700; color: var(--text-main); }
         
-        /* Colors */
         .text-warning { color: #f57f17; }
         .text-good { color: #2e7d32; }
         .text-danger { color: #c62828; }
@@ -139,18 +131,17 @@
 
         <div class="parties-visual">
             <div class="party-node">
-                <span class="party-name">{{ $rent->user->first_name ?? 'Tenant' }}</span>
+                <span class="party-name">{{ $rent->user->last_name ?? 'Tenant' }}</span>
                 <span class="party-role">Tenant</span>
             </div>
             <div class="connection-icon">➜</div>
             <div class="party-node">
-                <span class="party-name">{{ $rent->department->user->first_name ?? 'Owner' }}</span>
+                <span class="party-name">{{ $rent->department->user->last_name ?? 'Owner' }}</span>
                 <span class="party-role">Owner</span>
             </div>
         </div>
 
         <div class="info-grid">
-            <!-- Row 1: Start & End/Cancel Dates -->
             <div class="info-item">
                 <span class="label">Start Date</span>
                 <span class="value">{{ $startDate->format('M d, Y') }}</span>
@@ -162,7 +153,6 @@
                 </span>
             </div>
 
-            <!-- Row 2: Fee & Status -->
             <div class="info-item">
                 <span class="label">Monthly Fee</span>
                 <span class="value">${{ number_format($amount) }}</span>

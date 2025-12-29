@@ -1,7 +1,7 @@
 <x-layout title="Contracts">
 
     <style>
-        /* --- BACKGROUND SHAPE ANIMATION --- */
+       
         @keyframes floatShape {
             0% { transform: translate(0, 0) rotate(0deg); }
             33% { transform: translate(50px, 80px) rotate(10deg); }
@@ -41,13 +41,13 @@
             animation-direction: alternate-reverse;
         }
 
-        /* --- PAGE SPECIFIC STYLES --- */
+        
         :root {
             --radius-xl: 24px;
             --radius-pill: 50px;
         }
         
-        /* Animation for page load */
+       
         @keyframes slideUpFade {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -60,7 +60,7 @@
             animation: slideUpFade 0.6s ease-out;
         }
 
-        /* --- Header & Controls --- */
+    
         .contracts-header {
             display: flex;
             justify-content: space-between;
@@ -90,7 +90,7 @@
             border: 1px solid var(--border-color);
         }
 
-        /* --- Search Input --- */
+      
         .search-group { position: relative; }
 
         .search-box {
@@ -106,7 +106,7 @@
 
         .search-box::placeholder { color: var(--text-sub); opacity: 0.6; }
 
-        /* --- Buttons --- */
+       
         .btn-action {
             padding: 10px 24px;
             border-radius: var(--radius-pill);
@@ -123,7 +123,7 @@
 
         .btn-search {
             background-color: var(--primary);
-            color: var(--bg-card); /* Inverted text for contrast */
+            color: var(--bg-card); 
         }
 
         .btn-search:hover { 
@@ -131,7 +131,7 @@
             color: var(--text-main);
         }
 
-        /* --- Status Filter Bar --- */
+      
         .status-filters {
             display: flex;
             gap: 12px;
@@ -163,7 +163,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
-        /* --- Active Filters --- */
+    
         .active-filters-bar {
             margin-bottom: 30px;
             display: flex;
@@ -188,16 +188,12 @@
             cursor: pointer;
         }
 
-        /* --- Contracts Grid --- */
+   
         .contracts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
             gap: 30px;
         }
-
-        /* =========================================
-           CARD COMPONENT STYLES
-           ========================================= */
 
         .rent-card-link {
             text-decoration: none;
@@ -224,7 +220,6 @@
             border-color: var(--gold);
         }
 
-        /* Card Header */
         .rent-header {
             display: flex;
             justify-content: space-between;
@@ -244,9 +239,9 @@
 
         .rent-id::before { content: '📄'; font-size: 18px; }
 
-        /* --- UNIFORM STATUS BADGES --- */
+       
         .rent-status {
-            /* Fix Width & Alignment */
+           
             min-width: 90px;
             height: 26px;
             display: inline-flex;
@@ -270,7 +265,7 @@
         :root.dark .rent-status.completed { color: #81c784; }
         :root.dark .rent-status.cancelled { color: #e57373; }
 
-        /* Parties Section */
+        
         .rent-parties {
             display: flex;
             align-items: center;
@@ -305,7 +300,7 @@
 
         .rent-arrow { color: var(--gold); font-size: 18px; }
 
-        /* Department Info */
+     
         .department-info {
             display: flex;
             align-items: center;
@@ -315,7 +310,7 @@
             padding: 0 4px;
         }
 
-        /* Details Grid */
+       
         .rent-details {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -350,7 +345,7 @@
             font-style: italic;
         }
 
-        /* --- Pagination --- */
+    
         .custom-paginator-wrapper {
             margin-top: 50px;
             display: flex;
@@ -406,14 +401,14 @@
         }
     </style>
 
-    <!-- Animation Layer -->
+    
     <div class="bg-animation-layer">
         <div class="anim-shape shape-1"></div>
         <div class="anim-shape shape-2"></div>
     </div>
 
     <div class="contracts-container">
-        <!-- Header -->
+       
         <div class="contracts-header">
             <h1 class="contracts-title">Rental Contracts</h1>
             

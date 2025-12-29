@@ -6,7 +6,7 @@
         .user-card-link {
             text-decoration: none;
             display: block;
-            height: 100%; /* Ensure uniform height in grids */
+            height: 100%; 
         }
 
         .user-card {
@@ -24,14 +24,14 @@
             height: 100%;
         }
 
-        /* Hover: Lift + Gold Border Glow */
+ 
         .user-card:hover {
             transform: translateY(-8px);
             border-color: var(--gold);
             box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1);
         }
 
-        /* --- 1. DECORATIVE HEADER --- */
+    
         .card-header-bg {
             width: 100%;
             height: 90px;
@@ -41,15 +41,15 @@
             z-index: 0;
         }
 
-        /* --- 2. FLOATING AVATAR --- */
+    
         .avatar-wrapper {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            margin-top: 45px; /* Pushes half-way down the header */
+            margin-top: 45px;
             position: relative;
             z-index: 1;
-            border: 4px solid var(--bg-card); /* Creates the 'cutout' effect */
+            border: 4px solid var(--bg-card); 
             background: var(--bg-card);
             box-shadow: 0 8px 16px rgba(0,0,0,0.08);
             display: flex;
@@ -72,7 +72,7 @@
             text-transform: uppercase;
         }
 
-        /* --- 3. STATUS BADGE (Top Right) --- */
+        
         .status-badge {
             position: absolute;
             top: 16px; right: 16px;
@@ -86,16 +86,16 @@
             background: var(--bg-card);
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
-        /* Status Colors */
+        
         .st-verified { color: #2e7d32; border: 1px solid #e8f5e9; background: #f1f8e9; }
         .st-pending { color: #f57f17; border: 1px solid #fff3e0; background: #fff8e1; }
         .st-rejected { color: #c62828; border: 1px solid #ffebee; background: #ffebee; }
         
-        /* Dark Mode Status */
+        
         :root.dark .st-verified { background: rgba(46,125,50,0.2); border-color: transparent; color: #a5d6a7; }
         :root.dark .st-pending { background: rgba(239,108,0,0.2); border-color: transparent; color: #ffcc80; }
 
-        /* --- 4. INFO CONTENT --- */
+        
         .card-body {
             padding: 16px 20px 0;
             width: 100%;
@@ -122,7 +122,7 @@
             opacity: 0.8;
         }
 
-        /* --- 5. WALLET FOOTER --- */
+ 
         .card-footer {
             width: 100%;
             padding: 16px;
@@ -142,7 +142,7 @@
         }
 
         .wallet-amount {
-            font-family: 'Plus Jakarta Sans', monospace; /* Monospace for numbers */
+            font-family: 'Plus Jakarta Sans', monospace; 
             font-size: 16px;
             font-weight: 800;
             color: var(--gold);
@@ -155,15 +155,13 @@
 
     <div class="user-card">
         
-        <!-- Background Header -->
+      
         <div class="card-header-bg"></div>
 
-        <!-- Floating Status Badge -->
+    
         <div class="status-badge st-{{ $user->verification_state }}">
             {{ ucfirst($user->verification_state) }}
         </div>
-
-        <!-- Big Avatar Circle -->
         
         <div class="avatar-wrapper">
             @if($user->profileImage)
@@ -175,7 +173,7 @@
             @endif
         </div>
 
-        <!-- Info Body -->
+      
         <div class="card-body">
             <h3 class="user-name">
                 {{ $user->first_name }} {{ $user->last_name }}
@@ -187,7 +185,7 @@
             </div>
         </div>
 
-        <!-- Wallet Footer -->
+     
         <div class="card-footer">
             <span class="wallet-label">Balance</span>
             <span class="wallet-amount">${{ number_format($user->wallet_balance ?? 0, 2) }}</span>
