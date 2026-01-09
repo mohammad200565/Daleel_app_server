@@ -1,11 +1,7 @@
 <x-layout title="{{ $user->first_name }} {{ $user->last_name }} - User Details">
 
     <style>
-        /* 
-           PAGE STYLES 
-           Using global variables from x-layout for automatic Dark Mode support
-        */
-
+       
         .user-detail-container { 
             max-width: 900px; 
             margin: 0 auto; 
@@ -30,7 +26,7 @@
 
         .user-detail-card { 
             background-color: var(--bg-card); 
-            border-radius: var(--radius-card); /* Using global radius */
+            border-radius: var(--radius-card); 
             padding: 40px; 
             box-shadow: var(--shadow-card); 
             border: 1px solid var(--border-color); 
@@ -67,12 +63,12 @@
             letter-spacing: 0.5px; 
         }
 
-        /* Status Colors - kept hardcoded for semantic meaning, but adaptable opacity */
+      
         .bg-verified { background: rgba(46, 125, 50, 0.1); color: #2e7d32; }
         .bg-pending { background: rgba(245, 127, 23, 0.1); color: #f57f17; }
         .bg-rejected { background: rgba(198, 40, 40, 0.1); color: #c62828; }
 
-        /* Dark Mode Text Adjustments for Badges */
+      
         :root.dark .bg-verified { color: #81c784; }
         :root.dark .bg-pending { color: #ffb74d; }
         :root.dark .bg-rejected { color: #e57373; }
@@ -146,7 +142,6 @@
             color: var(--text-main); 
         }
 
-        /* Wallet Card - Adaptive Gradient */
         .wallet-card { 
             background: linear-gradient(135deg, var(--gold-light) 0%, var(--bg-card) 100%); 
             border: 1px solid var(--gold); 
@@ -155,7 +150,7 @@
 
         @media (min-width: 600px) { .wallet-card { grid-column: span 2; } }
 
-        /* Specific Dark Mode override for Wallet to ensure it's not too bright */
+        
         :root.dark .wallet-card {
             background: linear-gradient(135deg, rgba(212, 180, 131, 0.15) 0%, var(--bg-card) 100%);
             border-color: rgba(212, 180, 131, 0.3);
@@ -175,7 +170,7 @@
 
         .btn-add-funds { 
             background-color: var(--gold); 
-            color: var(--bg-card); /* Text contrast */
+            color: var(--bg-card);
             border: none; 
             padding: 6px 12px; 
             border-radius: 8px; 
@@ -189,7 +184,7 @@
             background-color: var(--gold-hover); 
         }
 
-        /* ID Section */
+     
         .id-section { margin-top: 40px; }
 
         .section-title { 
@@ -237,7 +232,7 @@
 
         .no-id-placeholder div:first-child { font-size: 40px; margin-bottom: 15px; }
 
-        /* Actions */
+      
         .verification-actions { 
             margin-top: 40px; 
             padding-top: 30px; 
@@ -278,7 +273,7 @@
             background-color: var(--bg-body); 
         }
 
-        /* Modal */
+       
         .modal { 
             display: none; 
             position: fixed; 
@@ -339,7 +334,7 @@
             border-color: var(--gold);
         }
 
-        /* Image Modal */
+       
         .image-modal {
             display: none;
             position: fixed;
@@ -474,7 +469,7 @@
         </div>
     </div>
     
-    <!-- Image Modal -->
+   
     <div id="imageModal" class="image-modal" onclick="closeImageModal()">
         <span class="close-image-modal" onclick="closeImageModal()">&times;</span>
         <img class="image-modal-content" id="modalImage">

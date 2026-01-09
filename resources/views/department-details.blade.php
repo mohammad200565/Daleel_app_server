@@ -1,10 +1,6 @@
 <x-layout title="Department Details">
 
     <style>
-        /* 
-           PAGE STYLES
-           Adapting to global theme variables for Dark Mode support
-        */
 
         .department-detail-container { 
             max-width: 1100px; 
@@ -28,13 +24,12 @@
 
         .department-detail-card { 
             background-color: var(--bg-card); 
-            border-radius: var(--radius-xl); /* Using global radius variable */
+            border-radius: var(--radius-xl);
             padding: 40px; 
             box-shadow: var(--shadow-card); 
             border: 1px solid var(--border-color); 
         }
 
-        /* --- Header --- */
         .department-header { 
             display: flex; 
             align-items: flex-start; 
@@ -44,7 +39,6 @@
             border-bottom: 1px solid var(--border-color); 
         }
 
-        /* Image Wrapper */
         .department-header-image-wrapper {
             position: relative;
             flex-shrink: 0;
@@ -55,7 +49,7 @@
             width: 240px; height: 180px; 
             border-radius: 16px; 
             object-fit: cover;
-            border: 4px solid var(--bg-card); /* Adaptive border */
+            border: 4px solid var(--bg-card); 
             box-shadow: var(--shadow-header);
             display: block;
         }
@@ -75,7 +69,6 @@
 
         .department-fallback-rect svg { width: 60px; height: 60px; opacity: 0.25; color: white; }
 
-        /* --- Header Info --- */
         .department-info { flex: 1; }
 
         .department-title { 
@@ -116,18 +109,17 @@
             letter-spacing: 0.5px; 
         }
 
-        /* Status Colors - using rgba for better blending */
         .bg-verified { background: rgba(46, 125, 50, 0.15); color: #2e7d32; }
         .bg-pending { background: rgba(245, 127, 23, 0.15); color: #f57f17; }
         .bg-rejected { background: rgba(198, 40, 40, 0.15); color: #c62828; }
         .bg-status { background: var(--bg-body); color: var(--text-sub); border: 1px solid var(--border-color); }
 
-        /* Dark Mode Text Adjustments */
+ 
         :root.dark .bg-verified { color: #81c784; }
         :root.dark .bg-pending { color: #ffb74d; }
         :root.dark .bg-rejected { color: #e57373; }
 
-        /* --- Details Grid --- */
+    
         .department-details-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); 
@@ -158,7 +150,7 @@
             color: var(--text-main); 
         }
 
-        /* --- Description --- */
+     
         .description-section { margin-bottom: 40px; }
 
         .section-heading { 
@@ -188,7 +180,7 @@
             border: 1px solid var(--border-color); 
         }
 
-        /* --- Images Grid --- */
+  
         .images-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
@@ -207,7 +199,7 @@
 
         .department-image { width: 100%; height: 100%; object-fit: cover; }
 
-        /* Image Hover Overlay */
+     
         .image-zoom-hover {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             border-radius: 12px; background: rgba(0,0,0,0.3); color: white;
@@ -220,7 +212,7 @@
 
         .department-header-image-wrapper .image-zoom-hover { border-radius: 16px; }
 
-        /* --- Verification Actions --- */
+      
         .verification-actions { 
             background: var(--bg-body); 
             padding: 20px; 
@@ -260,10 +252,10 @@
 
         .btn-reject:hover { background-color: #ffebee; }
 
-        /* Dark mode reject hover fix */
+     
         :root.dark .btn-reject:hover { background-color: rgba(198, 40, 40, 0.1); }
 
-        /* --- Image Modal --- */
+    
         .image-modal {
             display: none; position: fixed; z-index: 2000; left: 0; top: 0;
             width: 100%; height: 100%; background-color: rgba(10, 5, 2, 0.95);
@@ -288,7 +280,7 @@
 
         .close-modal:hover { color: var(--gold); }
 
-        /* Modal Nav */
+     
         .modal-nav {
             position: absolute; top: 50%; transform: translateY(-50%);
             background: rgba(255,255,255,0.1); color: white; border: none;
@@ -312,7 +304,7 @@
         <div class="department-detail-card">
             
             <div class="department-header">
-                <!-- Header Image -->
+       
                 @if($department->images->isNotEmpty())
                     <div class="department-header-image-wrapper gallery-item">
                         <img src="{{ asset('storage/' . $department->images->first()->path) }}" alt="Department Image" class="department-header-image">
@@ -324,7 +316,7 @@
                     </div>
                 @endif
                 
-                <!-- Header Info -->
+          
                  <div class="department-info">
                     <div class="header-badges">
                         <span class="badge-pill @if($department->verification_state === 'verified') bg-verified @elseif($department->verification_state === 'rejected') bg-rejected @else bg-pending @endif">{{ ucfirst($department->verification_state) }}</span>
@@ -343,7 +335,7 @@
                 </div>
             </div>
 
-            <!-- Details Grid -->
+          
             <div class="department-details-grid">
                 <div class="detail-card"><div class="detail-label">Area Size</div><div class="detail-value">{{ $department->area }} <small>m²</small></div></div>
                 <div class="detail-card"><div class="detail-label">Bedrooms</div><div class="detail-value">{{ $department->bedrooms }}</div></div>
@@ -356,7 +348,7 @@
                 <div class="description-content">{{ $department->description ?? 'No description provided for this department.' }}</div>
             </div>
 
-            <!-- Image Gallery -->
+          
             @if($department->images && $department->images->count() > 0)
                 <div class="description-section">
                     <h3 class="section-heading">Gallery ({{ $department->images->count() }})</h3>
@@ -371,7 +363,6 @@
                 </div>
             @endif
 
-            <!-- Verification Actions -->
              <div class="verification-actions">
                  @if($department->verification_state === 'pending')
                     <form action="{{ route('departments.reject', $department) }}" method="POST">@csrf @method('PUT')<button type="submit" class="action-btn btn-reject">✗ Reject</button></form>
@@ -384,7 +375,7 @@
             </div>
         </div>
 
-        <!-- Image Modal -->
+      
         <div id="imageModal" class="image-modal">
             <span class="close-modal" onclick="closeImageModal()">&times;</span>
             <button class="modal-nav modal-prev" onclick="showPrevImage()">&#10094;</button>
@@ -403,7 +394,7 @@
         let galleryImages = [];
         let currentImageIndex;
 
-        // Gather all gallery images when the page loads
+     
         document.addEventListener('DOMContentLoaded', () => {
             const galleryItems = document.querySelectorAll('.gallery-item');
             galleryItems.forEach((item, index) => {
@@ -432,7 +423,7 @@
             document.body.style.overflow = 'auto';
         }
 
-        // Navigation functions
+      
         function showNextImage() {
             currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
             updateModalImage();
@@ -443,7 +434,7 @@
             updateModalImage();
         }
         
-        // Add keyboard navigation
+        
         document.addEventListener('keydown', function(event) {
             if (modal.style.display === 'flex') {
                 if (event.key === 'Escape') closeImageModal();
@@ -452,7 +443,7 @@
             }
         });
 
-        // Close modal on background click
+     
         modal.addEventListener('click', function(event) {
             if (event.target === modal || event.target.classList.contains('modal-content-wrapper')) {
                 closeImageModal();
