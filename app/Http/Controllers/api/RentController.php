@@ -54,6 +54,13 @@ class RentController extends BaseApiController
     public function store(StoreRentRequest $request)
     {
         $data = $request->validated();
+        $department = Department::findOrFail($data['department_id']);
+        if ( $department->verification_state != 'verified' ) {
+            return $this->errorResponse(
+                "This department is not available for rent.",
+                422
+            );
+        }
         $user = request()->user();
 
         $start = Carbon::parse($data['startRent'])->startOfDay();

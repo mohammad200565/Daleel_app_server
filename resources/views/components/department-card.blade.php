@@ -208,7 +208,7 @@
             </div>
 
             <div class="dept-location">
-                {{ $department->location['city'] ?? 'Unknown City' }}
+                {{ $department->location['governorate'] ?? 'Unknown City' }}
             </div>
 
             <span class="dept-district">
