@@ -53,19 +53,25 @@ class AuthController extends BaseApiController
 
     public function register(RegisterRequest $request)
     {
-        $data = $request->validated();
-
         $key = $this->hitRateLimiter($request);
         RateLimiter::hit($key, 60);
 
         $profilePath = null;
         $personIdPath = null;
-        if ($request->hasFile('profileImage')) {
-            $profilePath = $request->file('profileImage')->store('users/profile', 'public');
+       if ($request->hasFile('profileImage')) {
+        $profilePath = $request->file('profileImage')
+            ->store('users/profile', 'public');
         }
+
         if ($request->hasFile('personIdImage')) {
-            $personIdPath = $request->file('personIdImage')->store('users/personId', 'public');
+            $personIdPath = $request->file('personIdImage')
+                ->store('users/personId', 'public');
         }
+
+        $data = $request->validated();
+
+        $data['profileImage'] = $profilePath;
+        $data['personIdImage'] = $personIdPath;
 
         $data['password'] = Hash::make($data['password']);
         $user = User::create($data);
