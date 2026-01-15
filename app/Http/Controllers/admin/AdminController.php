@@ -207,6 +207,7 @@ class AdminController extends BaseApiController
 
     public function login(Request $request)
     {
+        \Log::Info('hi');
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|string',
@@ -215,7 +216,6 @@ class AdminController extends BaseApiController
         $email = $request->input('email');
         $password = $request->input('password');
         $user = User::first();
-
         if ($user && Hash::check($password, $user->password)) {
             Auth::login($user);
             return redirect('/')->with('success', 'Login successful');

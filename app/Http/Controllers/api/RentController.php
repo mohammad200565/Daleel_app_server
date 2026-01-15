@@ -54,6 +54,13 @@ class RentController extends BaseApiController
     public function store(StoreRentRequest $request)
     {
         $data = $request->validated();
+        $department = Department::findOrFail($data['department_id']);
+        if ( $department->verification_state != 'verified' ) {
+            return $this->errorResponse(
+                "This department is not available for rent.",
+                422
+            );
+        }
         $user = request()->user();
 
         $start = Carbon::parse($data['startRent'])->startOfDay();
@@ -260,9 +267,7 @@ class RentController extends BaseApiController
         DB::transaction(function () use ($rent, $department, $user) {
             $user->decrement('wallet_balance', $rent->rentFee);
             $rent->status = 'onRent';
-            $department->isAvailable = false;
 
-            $department->save();
             $rent->save();
         });
 

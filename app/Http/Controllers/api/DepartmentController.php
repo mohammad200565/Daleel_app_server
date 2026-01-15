@@ -55,7 +55,6 @@ class DepartmentController extends BaseApiController
     public function update(UpdateDepartmentRequest $request, Department $department)
     {
         $this->authorize('update', $department);
-
         $validated = $request->validated();
         $department->update($validated);
         $department['verification_state'] = 'pending';
@@ -69,6 +68,7 @@ class DepartmentController extends BaseApiController
             }
         }
         $department->load('images', 'user');
+        $department->save();
 
         return $this->successResponse(
             'Department updated successfully',

@@ -88,81 +88,81 @@ class DatabaseSeeder extends Seeder
             ]
         ]);
 
-        $departments = [
-            [
-                'headDescription' => 'Homsi Home',
-                'user_id' => 2,
-                'area' => 50,
-                'bedrooms' => 1,
-                'bathrooms' => 1,
-                'rentFee' => 500,
-                'status' => 'furnished',
-                'verification_state' => 'verified',
-                'floor' => 1,
-                'location' => ['city' => 'Damascus'],
-                'image' => 'departments/Test.jpg',
-            ],
-            [
-                'headDescription' => 'Habbosh Home',
-                'user_id' => 3,
-                'area' => 50,
-                'bedrooms' => 1,
-                'bathrooms' => 1,
-                'rentFee' => 500,
-                'status' => 'furnished',
-                'verification_state' => 'verified',
-                'floor' => 1,
-                'location' => ['city' => 'Damascus'],
-                'image' => 'departments/Test.jpg',
-            ],
-            [
-                'headDescription' => 'Yazan Home',
-                'user_id' => 4,
-                'area' => 50,
-                'bedrooms' => 1,
-                'bathrooms' => 1,
-                'rentFee' => 500,
-                'status' => 'furnished',
-                'verification_state' => 'verified',
-                'floor' => 1,
-                'location' => ['city' => 'Damascus'],
-                'image' => 'departments/Test.jpg',
-            ],
-            [
-                'headDescription' => 'Loulia Home',
-                'user_id' => 5,
-                'area' => 50,
-                'bedrooms' => 1,
-                'bathrooms' => 1,
-                'rentFee' => 500,
-                'status' => 'furnished',
-                'verification_state' => 'verified',
-                'floor' => 1,
-                'location' => ['city' => 'Damascus'],
-                'image' => 'departments/Test.jpg',
-            ],
-            [
-                'headDescription' => 'Zain Home',
-                'user_id' => 6,
-                'area' => 50,
-                'bedrooms' => 1,
-                'bathrooms' => 1,
-                'rentFee' => 500,
-                'status' => 'furnished',
-                'verification_state' => 'verified',
-                'floor' => 1,
-                'location' => ['city' => 'Damascus'],
-                'image' => 'departments/Test.jpg',
-            ],
-        ];
+        // $departments = [
+        //     [
+        //         'headDescription' => 'Homsi Home',
+        //         'user_id' => 2,
+        //         'area' => 50,
+        //         'bedrooms' => 1,
+        //         'bathrooms' => 1,
+        //         'rentFee' => 500,
+        //         'status' => 'furnished',
+        //         'verification_state' => 'verified',
+        //         'floor' => 1,
+        //         'location' => ['city' => 'Damascus'],
+        //         'image' => 'departments/Test.jpg',
+        //     ],
+        //     [
+        //         'headDescription' => 'Habbosh Home',
+        //         'user_id' => 3,
+        //         'area' => 50,
+        //         'bedrooms' => 1,
+        //         'bathrooms' => 1,
+        //         'rentFee' => 500,
+        //         'status' => 'furnished',
+        //         'verification_state' => 'verified',
+        //         'floor' => 1,
+        //         'location' => ['city' => 'Damascus'],
+        //         'image' => 'departments/Test.jpg',
+        //     ],
+        //     [
+        //         'headDescription' => 'Yazan Home',
+        //         'user_id' => 4,
+        //         'area' => 50,
+        //         'bedrooms' => 1,
+        //         'bathrooms' => 1,
+        //         'rentFee' => 500,
+        //         'status' => 'furnished',
+        //         'verification_state' => 'verified',
+        //         'floor' => 1,
+        //         'location' => ['city' => 'Damascus'],
+        //         'image' => 'departments/Test.jpg',
+        //     ],
+        //     [
+        //         'headDescription' => 'Loulia Home',
+        //         'user_id' => 5,
+        //         'area' => 50,
+        //         'bedrooms' => 1,
+        //         'bathrooms' => 1,
+        //         'rentFee' => 500,
+        //         'status' => 'furnished',
+        //         'verification_state' => 'verified',
+        //         'floor' => 1,
+        //         'location' => ['city' => 'Damascus'],
+        //         'image' => 'departments/Test.jpg',
+        //     ],
+        //     [
+        //         'headDescription' => 'Zain Home',
+        //         'user_id' => 6,
+        //         'area' => 50,
+        //         'bedrooms' => 1,
+        //         'bathrooms' => 1,
+        //         'rentFee' => 500,
+        //         'status' => 'furnished',
+        //         'verification_state' => 'verified',
+        //         'floor' => 1,
+        //         'location' => ['city' => 'Damascus'],
+        //         'image' => 'departments/Test.jpg',
+        //     ],
+        // ];
 
-        foreach ($departments as $deptData) {
-            $image = $deptData['image'];
-            unset($deptData['image']);
-            $department = Department::create($deptData);
-            $department->images()->create([
-                'path' => $image,
-            ]);
-        }
+        // foreach ($departments as $deptData) {
+        //     $image = $deptData['image'];
+        //     unset($deptData['image']);
+        //     $department = Department::create($deptData);
+        //     $department->images()->create([
+        //         'path' => $image,
+        //     ]);
+        // }
     }
 }

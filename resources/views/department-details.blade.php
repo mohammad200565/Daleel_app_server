@@ -323,7 +323,7 @@
                         <span class="badge-pill bg-status">{{ ucfirst($department->status) }}</span>
                     </div>
 
-                    <h1 class="department-title">{{ $department->location['city'] ?? 'Unknown City' }} Apartment</h1>
+                    <h1 class="department-title">{{ $department->location['governorate'] ?? 'Unknown City' }} Apartment</h1>
                     
                     <div class="department-location-block">
                         <span class="location-icon">📍</span>

@@ -394,7 +394,7 @@
                                 <span class="row-subtitle">{{ $department->area }}m² • {{ $department->bedrooms }} Bed</span>
                             </div>
                             <div class="price-tag">
-                                ${{ number_format($department->rent_fee) }}
+                                ${{ number_format($department->rentFee) }}
                             </div>
                         </a>
                     @empty

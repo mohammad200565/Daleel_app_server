@@ -24,6 +24,8 @@ class RentResource extends JsonResource
             $data['user'] = new UserResource($this->resource->user);
         }
         if ($this->resource->relationLoaded('department')) {
+            $this->resource->department->load('images');
+
             $data['department'] = new DepartmentResource($this->resource->department);
         }
         return $data;
