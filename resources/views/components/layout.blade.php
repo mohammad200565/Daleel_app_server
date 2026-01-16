@@ -6,13 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'Daleel Admin' }}</title>
 
-    <!-- Premium Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <script>
-        // Prevent flash of unstyled content
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         } else {
@@ -22,7 +20,6 @@
 
     <style>
         :root {
-            /* --- GLOBAL VARIABLES (LIGHT MODE) --- */
             --primary: #5d4037;
             --primary-soft: #8d6e63;
             --primary-hover: #4a332a;
@@ -33,7 +30,6 @@
 
             --bg-body: #f9f8f6;
             --bg-card: #ffffff;
-            /* Nav is now slightly transparent for glass effect */
             --bg-nav: rgba(255, 255, 255, 0.8);
 
             --text-main: #5d4037;
@@ -47,7 +43,6 @@
             --radius-card: 24px;
         }
 
-        /* --- DARK MODE OVERRIDES --- */
         :root.dark {
             --primary: #e6dace;
             --primary-soft: #a89f91;
@@ -59,7 +54,6 @@
 
             --bg-body: #121212;
             --bg-card: #1e1e1e;
-            /* Dark glass nav */
             --bg-nav: rgba(30, 30, 30, 0.8);
 
             --text-main: #e6dace;
@@ -80,10 +74,9 @@
             display: flex;
             flex-direction: column;
             transition: background-color 0.3s ease, color 0.3s ease;
-            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+            overflow-x: hidden;
         }
 
-        /* --- GLOBAL BACKGROUND ANIMATION --- */
         @keyframes floatShape {
             0% { transform: translate(0, 0) rotate(0deg); }
             33% { transform: translate(50px, 80px) rotate(10deg); }
@@ -94,7 +87,7 @@
         .bg-animation-layer {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; /* Behind everything */
+            z-index: -1; 
             overflow: hidden;
             pointer-events: none;
         }
@@ -110,23 +103,22 @@
         .shape-1 {
             top: -10%; left: -10%;
             width: 50vw; height: 50vw;
-            background: rgba(124, 77, 255, 0.15); /* Soft Purple */
+            background: rgba(124, 77, 255, 0.15);
             border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
         }
 
         .shape-2 {
             bottom: -10%; right: -10%;
             width: 45vw; height: 45vw;
-            background: rgba(33, 150, 243, 0.15); /* Soft Blue */
+            background: rgba(33, 150, 243, 0.15);
             border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
             animation-duration: 30s;
             animation-direction: alternate-reverse;
         }
 
-        /* --- Modern Glass Navbar --- */
         .navbar {
             background-color: var(--bg-nav);
-            backdrop-filter: blur(12px); /* Blur effect */
+            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             padding: 1rem 3rem;
             display: flex;
@@ -159,11 +151,10 @@
             box-shadow: 0 0 10px var(--gold);
         }
 
-        /* --- Nav Links --- */
         .nav-menu {
             display: flex;
             gap: 6px;
-            background: rgba(var(--text-main), 0.03); /* Extremely subtle bg */
+            background: rgba(var(--text-main), 0.03);
             padding: 5px;
             border-radius: var(--radius-pill);
             border: 1px solid var(--border-color);
@@ -186,11 +177,10 @@
 
         .nav-link.active {
             background-color: var(--primary);
-            color: #ffffff !important; /* Force white text in both modes */
+            color: #ffffff !important; 
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        /* --- Buttons --- */
         .auth-btn {
             background: transparent;
             color: var(--text-main);
@@ -210,7 +200,6 @@
             background: rgba(200, 168, 122, 0.05);
         }
 
-        /* --- Theme Toggle --- */
         .theme-toggle {
             background: transparent;
             border: 1px solid var(--border-color);
@@ -248,7 +237,7 @@
         }
 
         .footer {
-            background-color: transparent; /* Transparent to show bg */
+            background-color: transparent;
             padding: 2rem;
             text-align: center;
             color: var(--text-sub);
@@ -267,7 +256,6 @@
 
 <body>
     
-    <!-- GLOBAL ANIMATION BACKGROUND -->
     <div class="bg-animation-layer">
         <div class="anim-shape shape-1"></div>
         <div class="anim-shape shape-2"></div>
@@ -284,7 +272,6 @@
         </div>
 
         <div class="actions-group">
-            <!-- Auth Buttons -->
             @guest
                 <a href="/login" class="auth-btn">Log In</a>
             @endguest
@@ -296,7 +283,6 @@
                 </form>
             @endauth
 
-            <!-- THEME TOGGLE BUTTON -->
             <button id="theme-toggle" class="theme-toggle" title="Toggle Dark Mode">
                 <span class="icon-sun" style="display: none;">☀️</span>
                 <span class="icon-moon">🌙</span>
@@ -312,7 +298,6 @@
         <p>&copy; 2026 Daleel. All rights reserved.</p>
     </footer>
 
-    <!-- Dark Mode Logic Script -->
     <script>
         const themeToggleBtn = document.getElementById('theme-toggle');
         const iconSun = document.querySelector('.icon-sun');
@@ -329,7 +314,6 @@
             }
         }
 
-        // Initial Icon Set
         updateIcon();
 
         themeToggleBtn.addEventListener('click', () => {

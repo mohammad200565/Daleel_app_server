@@ -5,13 +5,13 @@
 <x-layout title="Recent Activities">
 
     <style>
-        /* --- ANIMATIONS --- */
+      
         @keyframes slideUpFade {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- BACKGROUND SHAPE ANIMATION --- */
+  
         @keyframes floatShape {
             0% { transform: translate(0, 0) rotate(0deg); }
             33% { transform: translate(50px, 80px) rotate(10deg); }
@@ -25,18 +25,18 @@
             z-index: -1;
             overflow: hidden;
             pointer-events: none;
-            /* No background-color set here, so it uses your Layout's Light/Dark theme */
+          
         }
 
         .anim-shape {
             position: absolute;
             filter: blur(70px);
-            opacity: 0.4; /* Subtle opacity to blend with your theme */
+            opacity: 0.4; 
             z-index: -1;
             animation: floatShape 20s infinite ease-in-out alternate;
         }
 
-        /* Shape 1: Subtle Purple */
+   
         .shape-1 {
             top: -10%; left: -10%;
             width: 50vw; height: 50vw;
@@ -44,7 +44,7 @@
             border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
         }
 
-        /* Shape 2: Subtle Blue/Teal */
+    
         .shape-2 {
             bottom: -10%; right: -10%;
             width: 45vw; height: 45vw;
@@ -60,7 +60,7 @@
             margin: 0 auto;
         }
 
-        /* --- HEADER --- */
+     
         .dashboard-header {
             margin-bottom: 40px;
             animation: slideUpFade 0.6s ease-out;
@@ -78,7 +78,7 @@
             font-size: 16px;
         }
 
-        /* --- 1. STAT CARDS --- */
+      
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -97,15 +97,10 @@
             opacity: 0;
             animation: slideUpFade 0.6s ease-out forwards;
             
-            /* Slight transparency to show animation behind */
+           
             background: rgba(var(--bg-card), 0.8);
             backdrop-filter: blur(8px); 
         }
-
-        /* For this to work with CSS variables that are hex codes, we usually need RGB vars. 
-           Since your layout uses Hex, we will rely on opacity or assume solid bg-card. 
-           If you want true glassmorphism, update --bg-card to be rgba. 
-           For now, I'll keep it simple: */
         .stat-card { background: var(--bg-card); }
 
         .stat-card:nth-child(1) { animation-delay: 0.1s; }
@@ -137,7 +132,7 @@
         }
         .stat-card:hover .stat-icon-wrapper { transform: scale(1.1) rotate(5deg); }
 
-        /* Icon Gradients */
+     
         .grad-blue { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); box-shadow: 0 8px 16px rgba(79, 172, 254, 0.3); }
         .grad-pink { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); box-shadow: 0 8px 16px rgba(255, 154, 158, 0.3); }
         .grad-green { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); box-shadow: 0 8px 16px rgba(67, 233, 123, 0.3); }
@@ -153,7 +148,7 @@
             pointer-events: none; z-index: 1;
         }
 
-        /* --- 2. LIST PANELS --- */
+      
         .content-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -201,7 +196,7 @@
         .panel-body::-webkit-scrollbar-track { background: transparent; }
         .panel-body::-webkit-scrollbar-thumb { background-color: #ddd; border-radius: 20px; }
 
-        /* --- LIST ROW & IMAGES --- */
+       
         .list-row {
             display: flex; align-items: center; gap: 16px;
             padding: 12px 16px; border-radius: 16px;
@@ -244,17 +239,13 @@
         .row-title { display: block; font-size: 15px; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
         .row-subtitle { font-size: 12px; font-weight: 500; color: var(--text-sub); }
 
-        /* --- UNIFORM BADGE SIZING --- */
+      
         .badge {
-            /* 1. Set a minimum width */
+          
             min-width: 85px; 
-            
-            /* 2. Use flexbox to center text vertically and horizontally */
             display: inline-flex;
             justify-content: center;
             align-items: center;
-            
-            /* 3. Set a fixed height */
             height: 26px;
             
             padding: 0 10px;
@@ -269,7 +260,7 @@
         .badge-pending { background: rgba(239, 108, 0, 0.1); color: #ef6c00; border: 1px solid rgba(239, 108, 0, 0.2); }
         .badge-cancelled, .badge-rejected { background: rgba(198, 40, 40, 0.1); color: #c62828; border: 1px solid rgba(198, 40, 40, 0.2); }
 
-        /* Dark Mode Badge Adjustments */
+       
         :root.dark .badge-verified { color: #81c784; border-color: #81c784; }
         :root.dark .badge-onRent { color: #64b5f6; border-color: #64b5f6; }
         :root.dark .badge-pending { color: #ffb74d; border-color: #ffb74d; }
@@ -282,7 +273,7 @@
         }
     </style>
 
-    <!-- Animation Layer (Behind Content) -->
+   
     <div class="bg-animation-layer">
         <div class="anim-shape shape-1"></div>
         <div class="anim-shape shape-2"></div>
@@ -296,8 +287,6 @@
                 <p>Welcome back! Here's what's happening today.</p>
             </div>
         </div>
-
-        <!-- 1. STATS GRID -->
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-watermark">👥</div>
@@ -352,7 +341,6 @@
             </div>
         </div>
 
-        <!-- 2. CONTENT LISTS -->
         <div class="content-grid">
             
             <div class="panel-card">
@@ -376,7 +364,6 @@
                                 <span class="row-subtitle">{{ $user->created_at->diffForHumans() }}</span>
                             </div>
                             
-                            <!-- Badges Uniform Size -->
                             <div class="badge badge-{{ $user->verification_state }}">
                                 {{ $user->verification_state }}
                             </div>
@@ -407,7 +394,7 @@
                                 <span class="row-subtitle">{{ $department->area }}m² • {{ $department->bedrooms }} Bed</span>
                             </div>
                             <div class="price-tag">
-                                ${{ number_format($department->rent_fee) }}
+                                ${{ number_format($department->rentFee) }}
                             </div>
                         </a>
                     @empty

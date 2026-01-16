@@ -1,7 +1,7 @@
 <x-layout title="Departments">
 
     <style>
-        /* --- BACKGROUND SHAPE ANIMATION --- */
+      
         @keyframes floatShape {
             0% { transform: translate(0, 0) rotate(0deg); }
             33% { transform: translate(50px, 80px) rotate(10deg); }
@@ -41,7 +41,7 @@
             animation-direction: alternate-reverse;
         }
 
-        /* --- PAGE ANIMATION --- */
+     
         @keyframes slideUpFade {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -54,7 +54,7 @@
             animation: slideUpFade 0.6s ease-out;
         }
 
-        /* --- HEADER & TITLE --- */
+      
         .departments-header {
             display: flex;
             justify-content: space-between;
@@ -72,7 +72,7 @@
             letter-spacing: -1px;
         }
 
-        /* --- CONTROLS (Search + Filter) --- */
+     
         .controls-wrapper {
             display: flex;
             align-items: center;
@@ -107,7 +107,7 @@
             padding: 10px 14px;
             font-size: 14px;
             color: var(--text-main);
-            width: 220px; /* Slightly compact */
+            width: 220px; 
             outline: none;
             font-weight: 600;
         }
@@ -118,7 +118,7 @@
             width: 1px; height: 24px; background: var(--border-color); margin: 0 6px;
         }
 
-        /* --- BUTTONS --- */
+      
         .btn-action {
             padding: 8px 20px;
             border-radius: 100px;
@@ -158,7 +158,7 @@
             color: var(--gold);
         }
 
-        /* --- ACTIVE FILTERS --- */
+  
         .active-filters-bar {
             margin-bottom: 30px;
             display: flex;
@@ -184,15 +184,15 @@
 
         .clear-link:hover { color: var(--gold); }
 
-        /* --- GRID LAYOUT --- */
+        
         .departments-grid {
             display: grid;
-            /* Reduced min-width to 270px to make cards smaller */
+            
             grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
             gap: 24px;
         }
 
-        /* --- EMPTY STATE --- */
+     
         .no-data {
             grid-column: 1 / -1;
             text-align: center;
@@ -203,7 +203,7 @@
             border: 2px dashed var(--border-color);
         }
 
-        /* --- PAGINATION --- */
+  
         .pagination-container {
             margin-top: 50px;
             display: flex;
@@ -218,7 +218,7 @@
             font-weight: 500;
         }
 
-        /* Style Laravel Pagination */
+    
         .pagination-container nav {
             background: var(--bg-card);
             padding: 8px;
@@ -227,19 +227,19 @@
         }
     </style>
 
-    <!-- Animation Layer -->
+    
     <div class="bg-animation-layer">
         <div class="anim-shape shape-1"></div>
         <div class="anim-shape shape-2"></div>
     </div>
 
     <div class="departments-container">
-        <!-- Header -->
+     
         <div class="departments-header">
             <h1 class="departments-title">Department Directory</h1>
             
             <div class="controls-wrapper">
-                <!-- Search Form -->
+              
                 <form method="GET" action="/departments" style="display: flex; align-items: center;">
                     @if(request('filter') === 'pending')
                         <input type="hidden" name="filter" value="pending">
@@ -253,7 +253,7 @@
                     <button type="submit" class="btn-action btn-search">Search</button>
                 </form>
                 <div class="divider-vertical"></div>
-                <!-- Filter Toggle -->
+           
                 <form method="GET" action="/departments" style="display: inline;">
                     @if(request('search'))
                         <input type="hidden" name="search" value="{{ request('search') }}">
@@ -267,7 +267,7 @@
             </div>
         </div>
 
-        <!-- Active Filters -->
+   
         @if(request('filter') === 'pending' || request('search'))
             <div class="active-filters-bar">
                 @if(request('filter') === 'pending')
@@ -284,7 +284,7 @@
             </div>
         @endif
 
-        <!-- Grid -->
+     
         <div class="departments-grid">
             @forelse($departments as $department)
                 <x-department-card :department="$department" />
@@ -302,8 +302,7 @@
                 </div>
             @endforelse
         </div>
-
-        <!-- Pagination -->
+   
         <div class="pagination-container">
             <div class="page-info-text">
                 Showing {{ $departments->firstItem() }} to {{ $departments->lastItem() }} of {{ $departments->total() }} results
